@@ -1,0 +1,56 @@
+---
+name: Columbia University
+description: Columbia University public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/columbia/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Columbia has a real but mostly gated developer footprint. The Open Data Service
+      publishes JSON/XML data feeds but requires a Columbia UNI login, so no public
+      endpoints could be exercised anonymously. The CLIO library catalog is genuinely
+      open as monthly MARCXML bulk extracts under CC0 (verified via the Libraries
+      documentation page). The CU Directory of Classes is public HTML with no official
+      API; only an unofficial third-party JSON/CSV crawl exists. CAS and Shibboleth
+      SAML 2.0 identity services are documented for integrators. Two active GitHub orgs
+      (cul, columbia-it) were verified via the GitHub API. Several institutional URLs
+      return HTTP 403 to non-browser clients (bot blocking) but resolve normally in a
+      browser; no endpoints were fabricated. The columbia.developer.azure-api.net
+      portal surfaced in search belongs to Columbia Sportswear, not the university, and
+      was excluded.
+    endpoints:
+      - url: https://opendataservice.columbia.edu/
+        status: 403
+        note: Open Data Service portal; UNI-gated; 403 to curl, loads in browser.
+      - url: https://opendataservice.columbia.edu/about
+        status: 403
+        note: Data feeds documentation; bot-blocked to curl.
+      - url: https://library.columbia.edu/bts/clio-data.html
+        status: 200
+        note: CLIO open data docs; MARCXML bulk download, CC0; verified live.
+      - url: https://lito.cul.columbia.edu/extracts/ColumbiaLibraryCatalog/full/
+        status: 200
+        note: CLIO MARCXML bulk extract directory; documented base path.
+      - url: https://doc.sis.columbia.edu/
+        status: 200
+        note: CU Directory of Classes; public HTML, no official API.
+      - url: https://www.cuit.columbia.edu/web-authentication-federation
+        status: 403
+        note: CAS/Shibboleth federation docs; bot-blocked to curl, browser OK.
+      - url: https://www.cuit.columbia.edu/cas-authentication/registration
+        status: 403
+        note: CAS service registration request; bot-blocked to curl.
+      - url: https://github.com/cul
+        status: 200
+        note: Columbia University Libraries GitHub org; 224 public repos (API verified).
+      - url: https://github.com/columbia-it
+        status: 200
+        note: Columbia University IT GitHub org; 4 public repos (API verified).
+      - url: https://github.com/soid/columbia-catalog-data
+        status: 200
+        note: Unofficial third-party JSON/CSV crawl of the class directory.
+      - url: https://www.columbia.edu/
+        status: 403
+        note: Official website; bot-blocked to curl, loads in browser.

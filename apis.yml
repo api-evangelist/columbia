@@ -1,0 +1,117 @@
+---
+aid: columbia
+name: Columbia University
+description: >-
+  Columbia University is a private Ivy League research university in New York City,
+  ranked #18 in the QS World University Rankings 2025. Its public developer and API
+  footprint is modest and largely gated: the central Open Data Service publishes
+  programming-friendly JSON/XML data feeds (course directory, CLIO library catalog,
+  building access, and more) that require a Columbia UNI login, while Columbia
+  University Libraries offers the CLIO catalog as open MARCXML bulk data under CC0.
+  Identity and access integration is provided via CAS and a Shibboleth/SAML 2.0
+  Identity Provider participating in the InCommon Federation. Source code is published
+  across the cul (Libraries) and columbia-it (CUIT) GitHub organizations.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/columbia/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Open Data
+  - Library
+  - Identity
+  - United States
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: columbia:opendata
+    name: Columbia Open Data Service
+    description: >-
+      Central university service publishing data feeds to software developers in
+      programming-friendly formats such as JSON and XML (including the course
+      directory, CLIO library catalog, and building access feeds). Access is gated:
+      any member of the University community may log in with their UNI to consume the
+      feeds. Feed pages document refresh schedules, data diagrams, and table/element
+      documentation.
+    humanURL: https://opendataservice.columbia.edu/
+    tags: [ Open Data, Data Feeds, JSON, XML, Gated ]
+    properties:
+      - type: Documentation
+        url: https://opendataservice.columbia.edu/about
+  - aid: columbia:clio-opendata
+    name: CLIO Library Catalog Open Data
+    description: >-
+      Columbia University Libraries publishes its catalog (bibliographic and holdings
+      data from the Integrated Library System behind CLIO) as open MARCXML bulk
+      extracts, updated monthly and released under a CC0 1.0 Public Domain
+      Designation. Covers books, serials, music, video, manuscripts and more;
+      excludes Law Library and ReCAP partner records.
+    humanURL: https://library.columbia.edu/bts/clio-data.html
+    baseURL: https://lito.cul.columbia.edu/extracts/ColumbiaLibraryCatalog/full/
+    tags: [ Library, Catalog, MARCXML, Open Data, Bulk Download ]
+    properties:
+      - type: Documentation
+        url: https://library.columbia.edu/bts/clio-data.html
+      - type: GitHub
+        url: https://github.com/cul/clio-spectrum
+  - aid: columbia:directory-of-classes
+    name: CU Directory of Classes
+    description: >-
+      Public web directory of Columbia University class offerings, browsable by
+      subject, department, semester, instruction method, weekday and start time. No
+      official documented API or JSON feed is published; the service points users to
+      Vergil Course Search for authoritative course data. An unofficial third-party
+      project (soid/columbia-catalog-data) crawls this directory and republishes it
+      as JSON/CSV.
+    humanURL: https://doc.sis.columbia.edu/
+    tags: [ Courses, Catalog, Directory, Unofficial ]
+    properties:
+      - type: Documentation
+        url: https://doc.sis.columbia.edu/
+      - type: GitHub
+        url: https://github.com/soid/columbia-catalog-data
+  - aid: columbia:identity
+    name: Columbia Identity (CAS / Shibboleth SAML)
+    description: >-
+      Columbia University Information Technology (CUIT) provides UNI-based web
+      authentication and federation. CAS (Central Authentication Service) supports
+      browser-based single sign-on and MFA, while the Shibboleth Identity Provider
+      supports SAML 2.0 single sign-on and participates in the InCommon Federation,
+      serving roughly 50 integrated applications.
+    humanURL: https://www.cuit.columbia.edu/web-authentication-federation
+    tags: [ Identity, Authentication, SAML, CAS, Shibboleth, SSO ]
+    properties:
+      - type: Documentation
+        url: https://www.cuit.columbia.edu/shibboleth
+      - type: Documentation
+        url: https://www.cuit.columbia.edu/cas-authentication
+      - type: SignUp
+        url: https://www.cuit.columbia.edu/cas-authentication/registration
+common:
+  - type: Website
+    url: https://www.columbia.edu/
+  - type: DeveloperPortal
+    url: https://opendataservice.columbia.edu/
+  - type: GitHub
+    url: https://github.com/cul
+  - type: GitHub
+    url: https://github.com/columbia-it
+  - type: Authentication
+    url: https://www.cuit.columbia.edu/web-authentication-federation
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/columbia-university/
+  - type: Plans
+    url: plans/columbia-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/columbia-rate-limits.yml
+  - type: FinOps
+    url: finops/columbia-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
