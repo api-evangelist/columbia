@@ -1,0 +1,52 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "columbia": "https://opendataservice.columbia.edu/vocab#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "logo": "schema:logo",
+    "sameAs": "schema:sameAs",
+    "department": "schema:department",
+    "parentOrganization": "schema:parentOrganization",
+    "Organization": "schema:CollegeOrUniversity",
+    "DataFeed": {
+      "@id": "schema:DataFeed",
+      "@context": {
+        "dataFormat": "schema:encodingFormat",
+        "license": "schema:license",
+        "distribution": "schema:distribution",
+        "downloadUrl": "schema:contentUrl",
+        "updateFrequency": "schema:datePublished"
+      }
+    },
+    "Catalog": {
+      "@id": "schema:Dataset",
+      "@context": {
+        "identifier": "schema:identifier",
+        "title": "schema:name",
+        "format": "schema:encodingFormat"
+      }
+    },
+    "Course": {
+      "@id": "schema:Course",
+      "@context": {
+        "courseCode": "schema:courseCode",
+        "subject": "schema:about",
+        "department": "schema:provider",
+        "instructor": "schema:instructor",
+        "semester": "schema:temporalCoverage"
+      }
+    }
+  },
+  "@type": "Organization",
+  "name": "Columbia University",
+  "url": "https://www.columbia.edu/",
+  "description": "Columbia University is a private Ivy League research university in New York City. Its public developer footprint includes the Columbia Open Data Service (gated JSON/XML data feeds), the CLIO library catalog open MARCXML bulk data, the CU Directory of Classes, and CAS/Shibboleth SAML identity federation.",
+  "logo": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg",
+  "sameAs": [
+    "https://www.linkedin.com/school/columbia-university/",
+    "https://github.com/cul",
+    "https://github.com/columbia-it"
+  ]
+}
