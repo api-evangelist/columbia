@@ -43,7 +43,7 @@
   "name": "Columbia University",
   "url": "https://www.columbia.edu/",
   "description": "Columbia University is a private Ivy League research university in New York City. Its public developer footprint includes the Columbia Open Data Service (gated JSON/XML data feeds), the CLIO library catalog open MARCXML bulk data, the CU Directory of Classes, and CAS/Shibboleth SAML identity federation.",
-  "logo": "https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg",
+  "logo": "https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg",
   "sameAs": [
     "https://www.linkedin.com/school/columbia-university/",
     "https://github.com/cul",
