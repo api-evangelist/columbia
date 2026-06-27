@@ -89,7 +89,7 @@ apis:
         url: https://www.cuit.columbia.edu/shibboleth
       - type: Documentation
         url: https://www.cuit.columbia.edu/cas-authentication
-      - type: SignUp
+      - type: Signup
         url: https://www.cuit.columbia.edu/cas-authentication/registration
 common:
   - type: Website
