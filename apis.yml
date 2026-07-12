@@ -92,6 +92,8 @@ apis:
       - type: Signup
         url: https://www.cuit.columbia.edu/cas-authentication/registration
 common:
+  - type: DomainSecurity
+    url: security/columbia-domain-security.yml
   - type: Website
     url: https://www.columbia.edu/
   - type: DeveloperPortal
