@@ -1,0 +1,91 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of Columbia University surfaces on 2026-08-19, plus commit and release history of
+  Columbia's own published application source at https://github.com/cul.
+provider: Columbia University
+providerId: columbia
+description: >-
+  Versioning, change communication and deprecation posture across the surfaces Columbia
+  University operates. There is no institution-wide API lifecycle practice, no changelog, no
+  deprecation policy and no version negotiation on any Columbia surface. What exists instead is
+  path versioning on one small API and an unusually open source-code trail.
+surfaces:
+- id: columbia:library-hours
+  name: Columbia University Libraries Hours API
+  x-operator: institution
+  versioning: path
+  current_version: v1
+  version_evidence: >-
+    /api/v1/ appears in the route table of Columbia's own published source
+    (config/routes.rb in cul/ldpd-hours) and in every live URL. No other version has ever been
+    published.
+  version_negotiation: none
+  media_type_versioning: false
+  deprecation_policy: none_published
+  sunset_header: false
+  changelog: none_published
+  release_notes: none_published
+  status: active
+  evidence_of_maintenance: >-
+    The application is actively maintained — the cul/ldpd-hours repository was last pushed
+    2026-07-13 and carries a CI workflow — but no change to the API is announced anywhere a
+    consumer would see it. A caller learns about a breaking change by breaking.
+  observed_drift: >-
+    The repository's test fixtures include api_v1_butler_three_days_v2.json and
+    api_v1_butler_three_days_v3.json alongside the unsuffixed fixture, evidence that the v1
+    response shape has been revised at least twice inside a version that never changed its
+    number.
+- id: columbia:identity
+  name: Columbia Shibboleth Identity Provider
+  x-operator: institution
+  versioning: protocol
+  current_version: SAML 2.0 (also SAML 1.1, Shibboleth 1.0)
+  deprecation_policy: none_published
+  status: active
+  notes: >-
+    The metadata document still advertises SAML 1.1 and Shibboleth 1.0 protocol support, both
+    long superseded, with no deprecation signal. The signing certificate is valid to 2044-05-16,
+    a twenty-year key lifetime. The document self-describes as static and hand-maintained.
+- id: columbia:clio-opendata
+  name: CLIO Library Catalog Open Data
+  x-operator: institution
+  versioning: none
+  release_cadence: monthly full extract plus a deletes file
+  deprecation_policy: none_published
+  status: active
+  evidence_of_maintenance: >-
+    108 files present in the extract directory at probe time — extract-001.xml.gz through the
+    current sequence, plus deletes.del.txt. Served from an Apache directory index, so a consumer
+    can see the file set and its modification times but has no manifest, no checksum and no feed.
+- id: columbia:iri-data-library
+  name: IRI/LDEO Climate Data Library
+  x-operator: institution
+  versioning: none
+  status: access_changed
+  notes: >-
+    A material lifecycle event that Columbia announced nowhere machine-readable: the data paths of
+    a long-running open climate data service now redirect to a login form. Any client built
+    against /SOURCES/ or the OPeNDAP endpoints is broken, and the front page still returns 200.
+- id: columbia:courseworks
+  name: CourseWorks (Instructure Canvas)
+  x-operator: tenant
+  versioning: path
+  current_version: v1
+  deprecation_policy: vendor
+  notes: >-
+    Canvas publishes a real deprecation and change-log practice. It is Instructure's, applies to
+    every Canvas customer, and is deliberately not credited to Columbia.
+summary:
+  surfaces_with_versioning: 2
+  surfaces_with_changelog: 0
+  surfaces_with_deprecation_policy: 0
+  surfaces_with_sunset_header: 0
+  institution_operated: 4
+  tenant_operated: 1
+notes: >-
+  Zero changelogs across the whole institution-operated estate is the finding. Columbia is
+  unusually good at publishing its source code — the cul GitHub organisation carries 225 public
+  repositories including the full application behind the Hours API — and unusually silent about
+  what it means for a consumer. The source trail is a substitute a determined developer can use
+  and an agent cannot.

@@ -1,0 +1,149 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of Columbia University surfaces on 2026-08-19, evaluated against the Kin Score
+  `education` regulatory regime standards list (scim, lti, oneroster, ed-fi, caliper, qti,
+  oai-pmh, shibboleth, saml, orcid, datacite, crossref).
+provider: Columbia University
+providerId: columbia
+regime: education
+description: >-
+  Domain-standard conformance for Columbia University, read from the artifacts and registry
+  records themselves rather than from any prose claim — Columbia makes no conformance claims on
+  any public developer surface. Every hit carries the operator of the surface it was found on,
+  because a standard implemented by a platform Columbia rents is a fact about the platform first
+  and about Columbia second. Reward-only: nothing is asserted that was not observed in a live
+  response.
+standards:
+- id: shibboleth
+  status: confirmed
+  x-operator: institution
+  evidence: >-
+    Columbia runs its own production Shibboleth Identity Provider and publishes its SAML metadata
+    anonymously. The document is self-described as "Columbia Shibboleth idp production instance
+    metadata", carries entityID urn:mace:incommon:columbia.edu — the InCommon MACE URN, which is
+    issued only to registered InCommon participants — and declares shibmd:Scope columbia.edu
+    under the Shibboleth metadata namespace urn:mace:shibboleth:metadata:1.0. Its
+    protocolSupportEnumeration includes urn:mace:shibboleth:1.0 alongside SAML, and it exposes a
+    Shibboleth-profile SSO endpoint at /idp/profile/Shibboleth/SSO. This is Columbia's own
+    software on Columbia's own host, not a vendor's.
+  location: https://shibboleth.columbia.edu/idp/shibboleth
+  status_code: 200
+  artifact: examples/columbia-shibboleth-idp-metadata-example.xml
+- id: saml
+  version: '2.0'
+  status: confirmed
+  x-operator: institution
+  evidence: >-
+    The same metadata document is a valid SAML 2.0 md:EntityDescriptor with an IDPSSODescriptor
+    role, protocolSupportEnumeration "urn:oasis:names:tc:SAML:2.0:protocol
+    urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0", two X.509 KeyDescriptors
+    (signing, valid to 2044-05-16, and encryption), three SAML 2.0 SingleSignOnService bindings
+    (HTTP-Redirect, HTTP-POST, HTTP-POST-SimpleSign), a SingleLogoutService, and an mdui:UIInfo
+    block declaring the display name, logo and privacy statement URL. Served as
+    application/xml over TLS on a certificate issued to O=Columbia University by
+    InCommon RSA OV SSL CA 3.
+  location: https://shibboleth.columbia.edu/idp/shibboleth
+  status_code: 200
+  artifact: examples/columbia-shibboleth-idp-metadata-example.xml
+- id: datacite
+  status: confirmed
+  x-operator: institution
+  evidence: >-
+    Columbia University Libraries is a registered DataCite repository client, symbol
+    CUL.COLUMBIA, active since 2018-12-03, clientType repository, registered against
+    library.columbia.edu. Columbia mints DOIs under its own prefix 10.7916 — 1,111,628 DOIs
+    were registered under that prefix at the time of probing — and those DOIs resolve to
+    Columbia's own host, e.g. 10.7916/x4bf-v234 -> dlc.library.columbia.edu. This is Columbia's
+    own persistent-identifier infrastructure; only the registry is DataCite's. Two further
+    Columbia DataCite clients exist for the Redivis data platform (CUL.REDIVIS "Academic Commons
+    Data Collection", CUL.CUIT "Columbia University Data Platform") and are tenant surfaces.
+  location: https://api.datacite.org/clients/cul.columbia
+  status_code: 200
+  artifact: examples/columbia-datacite-client-example.json
+- id: crossref
+  status: confirmed
+  x-operator: institution
+  evidence: >-
+    Columbia University Libraries is Crossref member 6984 with 2,348 registered DOIs, depositing
+    scholarly metadata into Crossref under its own member account. Columbia University Press is a
+    separate Crossref member (4359, 106,513 DOIs), so the institution deposits through two
+    distinct registered identities. Verified against the Crossref members API.
+  location: https://api.crossref.org/members/6984
+  status_code: 200
+  artifact: examples/columbia-crossref-member-example.json
+- id: lti
+  version: '1.3'
+  status: confirmed
+  x-operator: tenant
+  evidence: >-
+    Columbia's learning management system, CourseWorks, publishes an LTI 1.3 / LTI Advantage
+    tool-platform security JWKS returning an RSA key set, and its Canvas REST API returns a
+    structured JSON 401 to unauthenticated callers. The LTI conformance is Instructure's product
+    running under Columbia's name for Columbia's courses; courseworks2.columbia.edu CNAMEs to
+    columbiasce.instructure.com and terminates in AWS us-east-1, not in Columbia address space.
+    Credited to the tenant, not to the institution.
+  location: https://courseworks2.columbia.edu/api/lti/security/jwks
+  status_code: 200
+- id: oai-pmh
+  status: not_confirmed
+  x-operator: institution
+  evidence: >-
+    Columbia Academic Commons runs on Hyrax/Blacklight on Columbia's own host
+    (academiccommons.columbia.edu -> ac-rails-prod1.cul.columbia.edu, 128.59.222.111), and
+    Blacklight's OAI provider is the expected software path — Columbia University Libraries even
+    maintains a fork of blacklight_oai_provider in its own GitHub organisation. But every request
+    to the OAI path, with and without a browser User-Agent, returns an Anubis proof-of-work
+    interstitial titled "Making sure you're not a bot!" with HTTP 200, so no Identify response
+    could be read. Per the pipeline rule, presence is not conformance: this is recorded as
+    not_confirmed rather than credited. It is a blocked probe about us, not a finding about
+    Columbia.
+  location: https://academiccommons.columbia.edu/catalog/oai?verb=Identify
+  status_code: 200
+  note: Anubis bot-challenge body, not an OAI-PMH response. Not credited.
+- id: orcid
+  status: not_found
+  evidence: >-
+    No ORCID member integration, ORCID authentication flow or ORCID-bearing metadata surface was
+    reachable. orcid.columbia.edu does not resolve. Academic Commons, where any ORCID integration
+    would live, is behind the Anubis challenge described above, so absence here is unproven
+    rather than demonstrated.
+- id: scim
+  status: not_found
+  evidence: >-
+    Probed the institution's identity hosts for SCIM 2.0 service provider configuration.
+    shibboleth.columbia.edu/.well-known/openid-configuration returned 404 and
+    /idp/profile/oidc/keyset returned 500; no SCIM endpoint is published anywhere on the identity
+    estate. Columbia's Shibboleth IdP is SAML-only in its published metadata.
+- id: oneroster
+  status: not_found
+  evidence: >-
+    No OneRoster endpoint or rostering interface was found. Columbia's enrolment data is reachable
+    only through the Instructure CourseWorks tenant and the Student Information System behind
+    doc.sis.columbia.edu, neither of which publishes a OneRoster surface.
+- id: caliper
+  status: not_found
+  evidence: No Caliper Analytics event store or endpoint was found on any reachable Columbia surface.
+- id: qti
+  status: not_found
+  evidence: No QTI assessment interchange surface was found.
+- id: ed-fi
+  status: not_found
+  evidence: >-
+    Ed-Fi is a US K-12 data standard with no applicability to a private research university.
+    Probed for completeness against the regime list and, as expected, absent.
+summary:
+  confirmed: 5
+  not_confirmed: 1
+  not_found: 6
+  institution_operated_hits: 4
+  tenant_operated_hits: 1
+notes: >-
+  Read the operator column before reading the count. Four of the five confirmed hits — shibboleth,
+  saml, datacite and crossref — are genuinely Columbia's own engineering, which is an unusually
+  good result for this cohort: most universities' standards hits arrive bundled with a vendor's
+  repository platform. Columbia runs its own Shibboleth IdP and mints DOIs under its own DataCite
+  prefix and its own Crossref membership. The one tenant hit, LTI 1.3, arrives with Instructure's
+  Canvas and would be there whether Columbia had an API practice or not. The notable gap is
+  oai-pmh, which Columbia almost certainly operates and which could not be verified because the
+  Libraries have deployed an anti-crawler challenge in front of the repository.

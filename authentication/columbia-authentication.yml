@@ -1,0 +1,125 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of Columbia University identity and API hosts on 2026-08-19, plus Columbia's
+  published Shibboleth IdP metadata and the CUIT web authentication documentation pointer.
+provider: Columbia University
+providerId: columbia
+description: >-
+  How authentication works across the surfaces Columbia University operates. The shape of this
+  file is the shape of the institution: one small API that needs no credential at all, and an
+  otherwise complete estate that is reachable only with a Columbia UNI. There is no API key, no
+  OAuth client registration, no developer account and no self-service path to any Columbia
+  surface for a caller who is not affiliated with the university.
+schemes:
+- id: none
+  name: Anonymous
+  x-operator: institution
+  applies_to:
+  - Columbia University Libraries Hours API (hours.library.columbia.edu/api/v1)
+  - Columbia Shibboleth IdP metadata (shibboleth.columbia.edu/idp/shibboleth)
+  - CLIO catalogue MARCXML bulk extracts (lito.cul.columbia.edu)
+  - CU Directory of Classes (doc.sis.columbia.edu)
+  description: >-
+    No credential of any kind. The Hours API explicitly skips authentication for its two public
+    operations — Columbia's own source carries `skip_before_action :authenticate_user!, only:
+    [:open_hours, :open_now]` — and sets Access-Control-Allow-Origin: * on both, making it
+    directly callable from a browser or an agent with no key exchange.
+  method: probed
+  evidence: https://hours.library.columbia.edu/api/v1/locations/open_now
+  status_code: 200
+- id: cas
+  name: Columbia CAS (Central Authentication Service)
+  type: browser_sso
+  x-operator: institution
+  applies_to:
+  - Columbia Open Data Service data feeds (opendataservice.columbia.edu)
+  - Columbia web applications generally
+  description: >-
+    Columbia University Information Technology operates a CAS server at cas.columbia.edu for
+    browser-based single sign-on with UNI credentials and multi-factor authentication. It is a
+    human login flow, not an API credential: there is no token endpoint a non-browser client can
+    call and no way for an unaffiliated developer to obtain a UNI. CAS also terminates the
+    Shibboleth IdP's SingleLogoutService.
+  method: probed
+  evidence: https://cas.columbia.edu/cas/login
+  status_code: 200
+- id: shibboleth-saml
+  name: Columbia Shibboleth Identity Provider (SAML 2.0)
+  type: saml
+  x-operator: institution
+  entity_id: urn:mace:incommon:columbia.edu
+  applies_to:
+  - Federated web applications integrated by CUIT
+  - InCommon and eduGAIN service providers
+  description: >-
+    Columbia runs its own production Shibboleth IdP and publishes signed SAML 2.0 metadata
+    anonymously. Relying parties are registered by CUIT; there is no public or dynamic service
+    provider registration, so an unaffiliated party cannot integrate. Supports SAML 2.0, SAML 1.1
+    and Shibboleth 1.0 protocols across HTTP-Redirect, HTTP-POST and HTTP-POST-SimpleSign
+    bindings. Scope is columbia.edu.
+  endpoints:
+    metadata: https://shibboleth.columbia.edu/idp/shibboleth
+    sso_redirect: https://shibboleth.columbia.edu/idp/profile/SAML2/Redirect/SSO
+    sso_post: https://shibboleth.columbia.edu/idp/profile/SAML2/POST/SSO
+    sso_post_simplesign: https://shibboleth.columbia.edu/idp/profile/SAML2/POST-SimpleSign/SSO
+    sso_shibboleth: https://shibboleth.columbia.edu/idp/profile/Shibboleth/SSO
+    slo: https://cas.columbia.edu/cas/logout
+  method: probed
+  evidence: https://shibboleth.columbia.edu/idp/shibboleth
+  status_code: 200
+  artifact: examples/columbia-shibboleth-idp-metadata-example.xml
+- id: uni-login
+  name: Columbia UNI affiliation gate
+  type: affiliation_gated
+  x-operator: institution
+  applies_to:
+  - Columbia Open Data Service (opendataservice.columbia.edu)
+  description: >-
+    The Open Data Service — the closest thing Columbia has to a developer portal, publishing
+    JSON and XML feeds for the course directory, the CLIO catalogue and building access — states
+    that any member of the University community may log in with their UNI to consume the feeds.
+    That is the whole access model: affiliation is the credential. There is no external tier, no
+    partner tier and no application process for a non-Columbia caller.
+  method: searched
+  evidence: https://opendataservice.columbia.edu/about
+  status_code: 403
+  note: >-
+    The Open Data Service is behind a Cloudflare managed challenge and its documentation could not
+    be read directly on this run. The access model above is carried forward from the prior profile
+    and is not re-verified; it is not upgraded to `probed`.
+- id: oidc-absent
+  name: OpenID Connect
+  status: not_published
+  x-operator: institution
+  description: >-
+    Columbia's Shibboleth IdP does not publish an OIDC discovery document.
+    shibboleth.columbia.edu/.well-known/openid-configuration returns 404 and
+    /idp/profile/oidc/keyset returns HTTP 500. The identity estate is SAML-only in everything it
+    publishes.
+  method: probed
+  evidence: https://shibboleth.columbia.edu/.well-known/openid-configuration
+  status_code: 404
+- id: canvas-token
+  name: Instructure Canvas bearer token (CourseWorks)
+  type: bearer
+  x-operator: tenant
+  description: >-
+    CourseWorks, Columbia's learning management system, is Instructure's Canvas. Its REST API
+    accepts Canvas access tokens issued to Columbia accounts and returns a structured JSON 401
+    otherwise. The credential, the token lifecycle and the documentation are Instructure's;
+    Columbia supplies the users.
+  method: probed
+  evidence: https://courseworks2.columbia.edu/api/v1/accounts
+  status_code: 401
+summary:
+  public_no_auth_surfaces: 4
+  affiliation_gated_surfaces: 2
+  self_service_registration: false
+  api_keys_issued: false
+  oauth_client_registration: false
+notes: >-
+  The honest headline is that Columbia issues no API credential to anyone outside the university.
+  What saves the profile from being entirely gated is that the four surfaces which are open —
+  the Hours API, the IdP metadata, the CC0 MARCXML bulk extracts and the class directory — are
+  open completely, with no key, no quota and no click-through.

@@ -1,0 +1,154 @@
+x-generated: '2026-08-19'
+x-method: derived
+x-source: >-
+  Derived from openapi/columbia-library-hours-openapi.yml and from defects observed live on
+  Columbia University surfaces on 2026-08-19. Columbia publishes no governance ruleset, style
+  guide or design standard for any of its APIs.
+x-provider: Columbia University
+x-providerId: columbia
+x-operator: institution
+x-format: spectral
+description: >-
+  A governance ruleset for the one contract Columbia University actually operates. Every rule
+  below was written against a real observation on hours.library.columbia.edu, not imported from a
+  generic ruleset — the failing ones are failing right now.
+rules:
+- id: columbia-required-param-must-not-soft-200
+  severity: error
+  status: failing
+  surface: columbia:library-hours
+  statement: >-
+    An operation whose handler requires a query parameter must reject a request that omits it
+    with 400, not fall through to an HTML page with HTTP 200.
+  observed: >-
+    GET /api/v1/locations/butler with no date parameter returns HTTP 200 and the service's HTML
+    web page. The caller is told the request succeeded.
+  evidence: https://hours.library.columbia.edu/api/v1/locations/butler
+  remediation: >-
+    Declare date / start_date / end_date as a required oneOf at the operation level and return
+    the service's existing 400 envelope when neither form is supplied.
+- id: columbia-error-must-carry-machine-code
+  severity: warn
+  status: failing
+  surface: columbia:library-hours
+  statement: >-
+    An error body must carry a stable machine-readable code, not only a human message with the
+    HTTP status repeated as a text prefix.
+  observed: '{"error":{"msg":"400: invalid date"},"data":null}'
+  evidence: https://hours.library.columbia.edu/api/v1/locations/butler?date=notadate
+  remediation: >-
+    Add a stable `code` member (e.g. invalid_date, date_range_inverted, location_not_found)
+    alongside msg, or adopt RFC 9457 problem+json.
+- id: columbia-nullable-collection-should-be-empty-not-null
+  severity: warn
+  status: failing
+  surface: columbia:library-hours
+  statement: >-
+    A collection response must return an empty collection when there is nothing to return, not
+    null, so that a consumer has one shape to handle.
+  observed: >-
+    /locations/open_now returns "data": null when no library is open, and a keyed object
+    otherwise. Confirmed in Columbia's own source: `open_locations_hash.empty? ? nil : ...`.
+  evidence: https://hours.library.columbia.edu/api/v1/locations/open_now
+  remediation: Return an empty object.
+- id: columbia-field-name-must-describe-content
+  severity: warn
+  status: failing
+  surface: columbia:library-hours
+  statement: A field name must describe what the field contains.
+  observed: >-
+    `formatted_date` contains a time or a time range ("Until 09:00PM", "09:00AM-09:00PM"), never
+    a date.
+  remediation: Rename to formatted_hours, or move display strings out of the contract entirely.
+- id: columbia-unset-string-should-be-null-not-empty
+  severity: info
+  status: failing
+  surface: columbia:library-hours
+  statement: An unset optional string should be null or absent, consistently, not an empty string.
+  observed: short_note and short_note_url return "" when unset while note returns a value or "".
+- id: columbia-collection-must-be-enumerable
+  severity: warn
+  status: failing
+  surface: columbia:library-hours
+  statement: >-
+    A resource addressed by an identifier must have an operation that lists the valid
+    identifiers.
+  observed: >-
+    /locations/{code} requires a location code, but the only listing operation is open_now, which
+    returns exclusively the locations open at that moment. There is no way to discover the code
+    for a library that is currently closed.
+  remediation: Add GET /locations returning the full location set.
+- id: columbia-timezone-must-be-explicit
+  severity: warn
+  status: failing
+  surface: columbia:library-hours
+  statement: A time value must carry or declare its timezone.
+  observed: >-
+    open_time and close_time are bare HH:MM strings. America/New_York is inferable from context
+    and stated nowhere in the response, the documentation or any schema.
+- id: columbia-api-must-publish-a-contract
+  severity: error
+  status: failing
+  surface: all
+  statement: A published API must publish a machine-readable description of itself.
+  observed: >-
+    Columbia publishes no OpenAPI, no schema and no reference documentation for the Hours API.
+    The contract in this repository was reverse-engineered from live probes and Columbia's own
+    source code.
+  remediation: >-
+    Publish openapi/columbia-library-hours-openapi.yml, or its equivalent, from
+    hours.library.columbia.edu.
+- id: columbia-api-hostname-must-serve-something
+  severity: warn
+  status: failing
+  surface: api.library.columbia.edu
+  statement: A hostname reserved for an API must publish at least one route or a catalogue.
+  observed: >-
+    api.library.columbia.edu serves a page titled "API Home | Columbia University Libraries" whose
+    body is the words "API Home. CUL API." Every path beneath it 404s with a placeholder whose
+    body reads "A custom errorhandler for 404 responses".
+  evidence: https://api.library.columbia.edu/
+- id: columbia-machine-access-must-not-contradict-open-licence
+  severity: warn
+  status: failing
+  surface: columbia:academic-commons, columbia:clio-opendata
+  statement: >-
+    An institution that releases data under an open licence should not proof-of-work-challenge
+    machine access to the same data.
+  observed: >-
+    Columbia University Libraries publishes the CLIO catalogue as CC0 MARCXML bulk downloads on
+    lito.cul.columbia.edu while serving an Anubis anti-crawler challenge to every automated
+    request against clio.columbia.edu, academiccommons.columbia.edu and
+    geodata.library.columbia.edu. The bulk route is the sanctioned one; nothing says so anywhere
+    a machine would look.
+  remediation: >-
+    Publish an llms.txt or a robots.txt that names the bulk extract path as the machine route.
+    Columbia currently publishes neither — both return 404 on www.columbia.edu.
+- id: columbia-passing-anonymous-read
+  severity: info
+  status: passing
+  surface: columbia:library-hours
+  statement: A public read API should be callable with no credential and no click-through.
+  observed: >-
+    Both operations skip authentication explicitly in Columbia's own source and set
+    Access-Control-Allow-Origin: *. No key, no quota, no registration.
+- id: columbia-passing-correct-status-codes
+  severity: info
+  status: passing
+  surface: columbia:library-hours
+  statement: Error conditions should use the correct HTTP status code.
+  observed: >-
+    404 for an unknown location code, 400 for an unparseable date and for an inverted range, each
+    with a JSON body and the correct content type. Only the missing-parameter path is wrong.
+x-summary:
+  total: 12
+  failing: 10
+  passing: 2
+  errors: 2
+  warnings: 6
+  info: 4
+x-notes: >-
+  Ten failing rules against one 2-operation API reads harsher than it is. The service does the
+  hard part right — it is genuinely public, genuinely CORS-enabled and genuinely returns correct
+  status codes — and fails almost entirely on things nobody at Columbia was ever asked to do,
+  because there is no institutional API governance function to ask.

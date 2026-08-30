@@ -1,0 +1,55 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes of every Columbia University surface reachable without a credential on 2026-08-19,
+  plus Columbia's published Shibboleth IdP metadata.
+provider: Columbia University
+providerId: columbia
+description: >-
+  Columbia University publishes no authorization scopes. This file records that as a measured
+  absence rather than leaving the artifact off, because the reason for the absence is itself the
+  finding: Columbia operates no OAuth 2.0 authorization server, no OpenID Connect provider and no
+  API key programme, so there is no place a scope could be declared.
+scopes: []
+x-operator: institution
+findings:
+- surface: Columbia University Libraries Hours API
+  baseURL: https://hours.library.columbia.edu/api/v1
+  x-operator: institution
+  scopes_declared: 0
+  assessment: >-
+    Read-only and fully anonymous. Both operations explicitly skip authentication and
+    authorization in Columbia's own source; there is nothing to scope. An absent scope model is
+    the correct design here, not a gap.
+- surface: Columbia Shibboleth Identity Provider
+  baseURL: https://shibboleth.columbia.edu/idp
+  x-operator: institution
+  scopes_declared: 0
+  assessment: >-
+    SAML 2.0, which uses attribute release policy rather than OAuth scopes. The published metadata
+    declares a shibmd:Scope of columbia.edu — that is the SAML security-domain scope, an entirely
+    different concept from an authorization scope, and it is deliberately not counted here. No
+    attribute release policy or entity category (REFEDS R&S, CoCo) is declared in the published
+    metadata.
+- surface: Columbia Open Data Service
+  baseURL: https://opendataservice.columbia.edu/
+  x-operator: institution
+  scopes_declared: 0
+  assessment: >-
+    Access is binary: a Columbia UNI grants it, anything else does not. There are no tiers,
+    no per-feed permissions published, and no scope vocabulary.
+- surface: CourseWorks (Instructure Canvas)
+  baseURL: https://courseworks2.columbia.edu/api/v1
+  x-operator: tenant
+  scopes_declared: 0
+  assessment: >-
+    Canvas does implement a developer-key scope model, but it is Instructure's vocabulary and is
+    not published by Columbia. Deliberately not credited to the institution.
+summary:
+  total_scopes: 0
+  oauth_authorization_server: false
+  openid_connect: false
+  api_key_programme: false
+notes: >-
+  Zero is the true number. This file exists so that the zero is legible and sourced, rather than
+  being read as an artifact that was never generated.

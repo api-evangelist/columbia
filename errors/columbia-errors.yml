@@ -1,0 +1,107 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Verbatim error bodies observed while probing Columbia University hosts on 2026-08-19. Every
+  entry is a response actually returned to an unauthenticated public request; none is synthesized.
+provider: Columbia University
+providerId: columbia
+description: >-
+  Columbia University publishes no error reference for any of its surfaces. This catalogue is
+  assembled from what the hosts actually returned, and it is deliberately explicit about which
+  envelopes belong to Columbia and which belong to a platform or an edge product in front of it.
+errors:
+- status: 404
+  host: hours.library.columbia.edu
+  x-operator: institution
+  content_type: application/json; charset=utf-8
+  body: '{"error":{"msg":"404: location not found"},"data":null}'
+  headers:
+    Access-Control-Allow-Origin: '*'
+    Cache-Control: 'no-cache'
+  assessment: >-
+    Correct status code, correct content type, and a consistent two-member envelope where `data`
+    is explicitly nulled rather than omitted — that is better discipline than most of this cohort
+    manages. The weakness is that the only machine-readable signal is the HTTP status itself: the
+    status is repeated as a text prefix inside a human message, and there is no stable error code,
+    no error type URI and no field pointer. An agent can branch on 404; it cannot branch on
+    anything inside the body.
+- status: 400
+  host: hours.library.columbia.edu
+  x-operator: institution
+  content_type: application/json; charset=utf-8
+  body: '{"error":{"msg":"400: invalid date"},"data":null}'
+  headers:
+    Access-Control-Allow-Origin: '*'
+  assessment: >-
+    Same envelope. The message does distinguish causes — an unparseable date returns "400: invalid
+    date" while an inverted range returns "400: start_date greater than end_date" — but only in
+    prose, and only in English. Columbia's own source confirms these are the two 400 paths.
+- status: 200
+  host: hours.library.columbia.edu
+  x-operator: institution
+  content_type: text/html; charset=utf-8
+  body: '<!DOCTYPE html> … Library Hours and Locations Open Now | Columbia University Libraries'
+  assessment: >-
+    A real defect, recorded here because it is an error condition that does not report itself as
+    one. GET /api/v1/locations/{code} with no `date`, `start_date` or `end_date` parameter returns
+    HTTP 200 with the service's HTML web page instead of JSON. A caller that omits a required
+    parameter is told the request succeeded and handed a document it cannot parse. This is the
+    soft-200 failure mode: the correct answer is 400.
+- status: 403
+  host: opendataservice.columbia.edu, www.cuit.columbia.edu, provost.columbia.edu, ai.columbia.edu, vergil.registrar.columbia.edu
+  x-operator: institution
+  content_type: text/html; charset=UTF-8
+  body: '<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title>… <meta name="robots" content="noindex,nofollow">'
+  assessment: >-
+    Cloudflare's managed-challenge interstitial, returned to every non-browser client across
+    Columbia's central Drupal web estate — including the Open Data Service, which is the closest
+    thing Columbia has to a developer portal. The status code is honest (403, not a soft 200) but
+    the effect is that Columbia's own developer-facing documentation is unreadable by any
+    automated client. Recorded as a blocked probe about us, not as a finding about Columbia.
+- status: 200
+  host: academiccommons.columbia.edu, clio.columbia.edu, geodata.library.columbia.edu
+  x-operator: institution
+  content_type: text/html; charset=utf-8
+  body: '<!doctype html><html lang="en"><head><title>Making sure you''re not a bot!</title><link rel="stylesheet" href="/.within.website/x/xess/xess.min.css">'
+  assessment: >-
+    Anubis, the proof-of-work anti-crawler challenge, deployed by Columbia University Libraries
+    in front of its entire Blacklight discovery estate — the CLIO catalogue, Academic Commons and
+    GeoData. Unlike the Cloudflare case this returns HTTP 200, so a naive crawler records a
+    success and stores a challenge page as content. It is the reason the OAI-PMH endpoint could
+    not be verified. Worth stating plainly: the Libraries publish bulk MARCXML under CC0 on one
+    host while proof-of-work-challenging machine access to the same catalogue on another.
+- status: 302
+  host: iridl.ldeo.columbia.edu
+  x-operator: institution
+  content_type: text/html; charset=utf-8
+  body: 'Redirect to https://iridl.ldeo.columbia.edu/auth/login?redirect=…'
+  assessment: >-
+    The IRI/LDEO Climate Data Library serves its landing pages anonymously but redirects every
+    data path — /SOURCES/, the OPeNDAP endpoints and the OGC WMS GetCapabilities request — to a
+    login form. A long-standing open climate data service is now authentication-gated. The 200 on
+    the front page is exactly the presence-is-not-access trap this pipeline warns about.
+- status: 401
+  host: courseworks2.columbia.edu
+  x-operator: tenant
+  content_type: application/json; charset=utf-8
+  body: '{"status":"unauthenticated","errors":[{"message":"user authorization required"}]}'
+  assessment: >-
+    The best-structured error body found anywhere in Columbia's estate — a machine-readable
+    `status` token plus an `errors` array — and it is Instructure's, not Columbia's. Canvas's
+    error contract applies identically to every Instructure customer.
+- status: 404
+  host: api.library.columbia.edu
+  x-operator: institution
+  content_type: text/html;charset=iso-8859-1
+  body: '<html><head><title>File not found</title></head><body><p>A custom errorhandler for 404 responses</p></body></html>'
+  assessment: >-
+    Columbia University Libraries owns the hostname api.library.columbia.edu and serves a page at
+    the root titled "API Home | Columbia University Libraries" whose entire body is the words
+    "API Home. CUL API." Every path beneath it — /v1, /docs, /openapi.json, /robots.txt — returns
+    this 404 placeholder whose body is a note to the developer who configured it. A reserved API
+    hostname with nothing published on it.
+notes: >-
+  Only three of these envelopes are Columbia's own application code, and all three come from the
+  same small Rails service. The rest are edge products, login walls and placeholders. The single
+  most consequential entry is the soft-200 on a missing required parameter, because it is the one
+  a consuming agent would silently get wrong.

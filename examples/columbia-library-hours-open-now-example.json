@@ -1,0 +1,39 @@
+{
+    "data": {
+        "lio": {
+            "open_time": "09:00",
+            "close_time": "17:30",
+            "formatted_date": "Until 05:30PM"
+        },
+        "social-work": {
+            "open_time": "10:00",
+            "close_time": "18:00",
+            "formatted_date": "Until 06:00PM"
+        },
+        "law-reference": {
+            "open_time": "10:00",
+            "close_time": "18:00",
+            "formatted_date": "Until 06:00PM"
+        },
+        "butler": {
+            "open_time": "09:00",
+            "close_time": "21:00",
+            "formatted_date": "Until 09:00PM"
+        },
+        "butler-24": {
+            "open_time": "09:00",
+            "close_time": "21:00",
+            "formatted_date": "Until 09:00PM"
+        },
+        "barnard": {
+            "open_time": "09:00",
+            "close_time": "21:00",
+            "formatted_date": "Until 09:00PM"
+        },
+        "law": {
+            "open_time": "08:00",
+            "close_time": "23:00",
+            "formatted_date": "Until 11:00PM"
+        }
+    }
+}

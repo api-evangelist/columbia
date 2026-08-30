@@ -1,0 +1,253 @@
+openapi: 3.2.0
+info:
+  title: Columbia University Libraries Hours Locations API
+  version: 1.0.0
+  summary: Opening hours and open-now status for Columbia University Libraries locations.
+  description: 'The public read API behind Columbia University Libraries'' hours service. It answers two questions without authentication: which library locations are open right now, and what the posted hours are for one location over a date or a date range. It is operated by Columbia University Libraries on Columbia''s own infrastructure — hours.library.columbia.edu resolves to diglib-rails-prod1.cul.columbia.edu (128.59.222.118) and is served under a TLS certificate issued to O=Columbia University by the InCommon/Internet2 CA. The application is Columbia''s own Rails codebase, published openly at github.com/cul/ldpd-hours under the cul GitHub organisation.
+
+
+    This is the only institution-operated, publicly consumable, unauthenticated API surface found anywhere in Columbia University''s estate. It is small, and it is genuinely theirs.
+
+
+    Columbia publishes no OpenAPI, no rate-limit policy, no terms of use and no changelog for this API. This document is a description of observed behaviour, not a contract Columbia has committed to.'
+  contact:
+    name: Columbia University Libraries
+    url: https://library.columbia.edu/services/askalibrarian.html
+  x-provenance:
+    generated: '2026-08-19'
+    method: probed
+    source: https://hours.library.columbia.edu/api/v1/locations/open_now
+    source_code: https://github.com/cul/ldpd-hours
+    x-operator: institution
+    x-operator-evidence: hours.library.columbia.edu -> diglib-rails-prod1.cul.columbia.edu -> 128.59.222.118 (Columbia University address space); TLS subject C=US, ST=New York, O=Columbia University, CN=library.columbia.edu; issuer C=US, O=Internet2, CN=InCommon RSA Server CA 2.
+servers:
+- url: https://hours.library.columbia.edu/api/v1
+  description: Production. The only published deployment.
+security: []
+tags:
+- name: Locations
+  description: Library locations and their posted opening hours.
+paths:
+  /locations/open_now:
+    get:
+      operationId: getLocationsOpenNow
+      tags:
+      - Locations
+      summary: List the library locations that are open at this moment
+      description: Returns every Columbia University Libraries location whose current timetable entry is open at request time, keyed by location code. Locations flagged closed or TBD are excluded, and a sub-location is suppressed when its primary location is already open. When no location is open the `data` member is null rather than an empty object — a caller must handle both shapes.
+      security: []
+      responses:
+        '200':
+          description: A map of open location codes to their current opening window. `data` is null when nothing is open.
+          headers:
+            Access-Control-Allow-Origin:
+              description: Always `*`; the API is browser-callable cross-origin.
+              schema:
+                type: string
+            Cache-Control:
+              description: Observed as `max-age=0, private, must-revalidate` — the service asks not to be cached.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenNowResponse'
+              examples:
+                sevenLocationsOpen:
+                  summary: Observed response, 2026-08-19
+                  externalValue: ../examples/columbia-library-hours-open-now-example.json
+  /locations/{code}:
+    get:
+      operationId: getLocationHours
+      tags:
+      - Locations
+      summary: Get posted hours for one location, for a date or a date range
+      description: Returns the posted opening hours for a single location. Exactly one of `date` or the `start_date`+`end_date` pair must be supplied; `date` accepts the literal `today`. If no date parameter is supplied the request does not reach this operation at all — the Rails router falls through and an HTML page is returned instead of JSON, which is a real defect in the deployed service and is recorded in errors/columbia-errors.yml.
+      security: []
+      parameters:
+      - name: code
+        in: path
+        required: true
+        description: The location's short code, as returned by /locations/open_now. Observed codes include butler, butler-24, barnard, law, law-reference, social-work and lio.
+        schema:
+          type: string
+          examples:
+          - butler
+      - name: date
+        in: query
+        required: false
+        description: A single ISO-8601 date, or the literal string `today`.
+        schema:
+          type: string
+          examples:
+          - today
+          - '2026-08-19'
+      - name: start_date
+        in: query
+        required: false
+        description: First date of an inclusive range. Must be supplied with `end_date`.
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        required: false
+        description: Last date of an inclusive range. Must be supplied with `start_date` and must not be earlier than it, or the service answers 400.
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Posted hours for the requested location across the requested dates.
+          headers:
+            Access-Control-Allow-Origin:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationHoursResponse'
+              examples:
+                singleDay:
+                  summary: Observed response for butler?date=today
+                  externalValue: ../examples/columbia-library-hours-location-day-example.json
+                dateRange:
+                  summary: Observed response for a three-day range
+                  externalValue: ../examples/columbia-library-hours-location-range-example.json
+        '400':
+          description: 'An unparseable date, or a start_date later than end_date. Observed body `{"error":{"msg":"400: invalid date"},"data":null}`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalidDate:
+                  externalValue: ../examples/columbia-library-hours-error-400-example.json
+        '404':
+          description: 'No location exists with the supplied code. Observed body `{"error":{"msg":"404: location not found"},"data":null}`.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                unknownLocation:
+                  externalValue: ../examples/columbia-library-hours-error-404-example.json
+components:
+  schemas:
+    OpenWindow:
+      type: object
+      required:
+      - open_time
+      - close_time
+      - formatted_date
+      properties:
+        open_time:
+          type: string
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+          description: Local opening time, 24-hour HH:MM. America/New_York; the API states no timezone.
+          examples:
+          - 09:00
+        close_time:
+          type: string
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+          description: Local closing time, 24-hour HH:MM.
+          examples:
+          - '21:00'
+        formatted_date:
+          type: string
+          description: Human display string. Named `formatted_date` but carries a time, not a date.
+          examples:
+          - Until 09:00PM
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - data
+      properties:
+        error:
+          type: object
+          required:
+          - msg
+          properties:
+            msg:
+              type: string
+              description: Human-readable message. Carries the HTTP status as a text prefix rather than a machine-readable code; there is no error identifier an agent can branch on.
+              examples:
+              - '404: location not found'
+        data:
+          type: 'null'
+    LocationHoursResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: Single-key map of the requested location code to its list of daily entries.
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/DayHours'
+    DayHours:
+      type: object
+      required:
+      - date
+      - closed
+      - tbd
+      - formatted_date
+      properties:
+        date:
+          type: string
+          format: date
+          examples:
+          - '2026-08-19'
+        open_time:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+          description: Absent or null when the location is closed or its hours are TBD.
+        close_time:
+          type:
+          - string
+          - 'null'
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+        closed:
+          type: boolean
+          description: True when the location is posted as closed for that date.
+        tbd:
+          type: boolean
+          description: True when hours for that date have not yet been decided.
+        note:
+          type:
+          - string
+          - 'null'
+          description: Free-text note on the day, e.g. the academic period.
+          examples:
+          - Intersession
+        short_note:
+          type:
+          - string
+          - 'null'
+        short_note_url:
+          type:
+          - string
+          - 'null'
+          description: Link accompanying short_note. Empty string when unset, not null.
+        formatted_date:
+          type: string
+          description: Human display string for the day's window.
+          examples:
+          - 09:00AM-09:00PM
+    OpenNowResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          description: Map of location code to the current opening window, or null when no location is open.
+          oneOf:
+          - type: 'null'
+          - type: object
+            additionalProperties:
+              $ref: '#/components/schemas/OpenWindow'

@@ -1,0 +1,39 @@
+{
+    "data": {
+        "id": "cul.columbia",
+        "type": "clients",
+        "attributes": {
+            "name": "Columbia University Libraries",
+            "symbol": "CUL.COLUMBIA",
+            "year": 2018,
+            "alternateName": null,
+            "description": "DOIs minted by Columbia University Libraries projects.",
+            "language": [],
+            "clientType": "repository",
+            "domains": "*",
+            "re3data": null,
+            "opendoar": null,
+            "issn": {},
+            "url": "https://library.columbia.edu/",
+            "created": "2018-12-03T17:17:41.000Z",
+            "updated": "2025-07-01T19:26:52.000Z",
+            "isActive": true
+        },
+        "relationships": {
+            "provider": {
+                "data": {
+                    "id": "cul",
+                    "type": "providers"
+                }
+            },
+            "prefixes": {
+                "data": [
+                    {
+                        "id": "10.7916",
+                        "type": "prefixes"
+                    }
+                ]
+            }
+        }
+    }
+}

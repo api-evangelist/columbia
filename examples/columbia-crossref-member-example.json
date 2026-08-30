@@ -1,0 +1,335 @@
+{
+    "status": "ok",
+    "message-type": "member",
+    "message-version": "1.0.0",
+    "message": {
+        "last-status-check-time": 1787094865113,
+        "primary-name": "Columbia University Libraries",
+        "counts": {
+            "current-dois": 758,
+            "backfile-dois": 1590,
+            "total-dois": 2348
+        },
+        "breakdowns": {
+            "dois-by-issued-year": [
+                [
+                    2022,
+                    365
+                ],
+                [
+                    2021,
+                    337
+                ],
+                [
+                    2025,
+                    310
+                ],
+                [
+                    2023,
+                    289
+                ],
+                [
+                    2024,
+                    285
+                ],
+                [
+                    2026,
+                    163
+                ],
+                [
+                    2020,
+                    78
+                ],
+                [
+                    2012,
+                    36
+                ],
+                [
+                    2009,
+                    34
+                ],
+                [
+                    2014,
+                    28
+                ],
+                [
+                    2006,
+                    27
+                ],
+                [
+                    2004,
+                    25
+                ],
+                [
+                    2015,
+                    24
+                ],
+                [
+                    2005,
+                    24
+                ],
+                [
+                    2013,
+                    22
+                ],
+                [
+                    2008,
+                    22
+                ],
+                [
+                    2016,
+                    21
+                ],
+                [
+                    1998,
+                    21
+                ],
+                [
+                    2010,
+                    20
+                ],
+                [
+                    2018,
+                    19
+                ],
+                [
+                    2000,
+                    18
+                ],
+                [
+                    2007,
+                    17
+                ],
+                [
+                    2019,
+                    16
+                ],
+                [
+                    2017,
+                    16
+                ],
+                [
+                    2003,
+                    16
+                ],
+                [
+                    1999,
+                    16
+                ],
+                [
+                    2011,
+                    15
+                ],
+                [
+                    2001,
+                    15
+                ],
+                [
+                    2002,
+                    12
+                ],
+                [
+                    1989,
+                    7
+                ],
+                [
+                    1988,
+                    7
+                ],
+                [
+                    1987,
+                    7
+                ],
+                [
+                    1997,
+                    6
+                ],
+                [
+                    1994,
+                    6
+                ],
+                [
+                    1990,
+                    6
+                ],
+                [
+                    1995,
+                    5
+                ],
+                [
+                    1993,
+                    4
+                ],
+                [
+                    1991,
+                    4
+                ],
+                [
+                    1996,
+                    3
+                ],
+                [
+                    1992,
+                    2
+                ]
+            ]
+        },
+        "prefixes": [
+            "10.7916",
+            "10.52214"
+        ],
+        "coverage": {
+            "affiliations-current": 0.0,
+            "affiliation-ror-ids-backfile": 0.0,
+            "similarity-checking-current": 0.9261213720316623,
+            "descriptions-current": 0.0,
+            "ror-ids-current": 0.0,
+            "funders-backfile": 0.0,
+            "licenses-backfile": 0.9364779874213836,
+            "funders-current": 0.0,
+            "affiliations-backfile": 0.009433962264150943,
+            "resource-links-backfile": 0.9761006289308176,
+            "orcids-backfile": 0.05220125786163522,
+            "funder-ror-ids-current": 0.0,
+            "update-policies-current": 0.0,
+            "ror-ids-backfile": 0.0,
+            "orcids-current": 0.4722955145118734,
+            "similarity-checking-backfile": 0.9742138364779874,
+            "references-backfile": 0.0,
+            "descriptions-backfile": 0.0,
+            "award-numbers-backfile": 0.0,
+            "update-policies-backfile": 0.0,
+            "licenses-current": 0.9419525065963061,
+            "award-numbers-current": 0.0,
+            "abstracts-backfile": 0.9245283018867925,
+            "resource-links-current": 0.9287598944591029,
+            "affiliation-ror-ids-current": 0.0,
+            "funder-ror-ids-backfile": 0.0,
+            "abstracts-current": 0.8654353562005277,
+            "references-current": 0.0
+        },
+        "prefix": [
+            {
+                "name": "Columbia University Libraries/Information Services",
+                "value": "10.7916"
+            },
+            {
+                "name": "Columbia University Libraries",
+                "value": "10.52214"
+            }
+        ],
+        "id": 6984,
+        "tokens": [
+            "columbia",
+            "university",
+            "libraries"
+        ],
+        "counts-type": {
+            "all": {
+                "journal-article": 2348
+            },
+            "backfile": {
+                "journal-article": 1590
+            },
+            "current": {
+                "journal-article": 758
+            }
+        },
+        "coverage-type": {
+            "all": {
+                "journal-article": {
+                    "last-status-check-time": 1787094865113,
+                    "affiliations": 0.006388415672913118,
+                    "abstracts": 0.905451448040886,
+                    "orcids": 0.1878194207836457,
+                    "affiliation-ror-ids": 0.0,
+                    "licenses": 0.93824531516184,
+                    "references": 0.0,
+                    "funders": 0.0,
+                    "similarity-checking": 0.9586882453151618,
+                    "funder-ror-ids": 0.0,
+                    "award-numbers": 0.0,
+                    "ror-ids": 0.0,
+                    "update-policies": 0.0,
+                    "resource-links": 0.9608177172061328,
+                    "descriptions": 0.0
+                }
+            },
+            "backfile": {
+                "journal-article": {
+                    "last-status-check-time": 1787094865113,
+                    "affiliations": 0.009433962264150943,
+                    "abstracts": 0.9245283018867925,
+                    "orcids": 0.05220125786163522,
+                    "affiliation-ror-ids": 0.0,
+                    "licenses": 0.9364779874213836,
+                    "references": 0.0,
+                    "funders": 0.0,
+                    "similarity-checking": 0.9742138364779874,
+                    "funder-ror-ids": 0.0,
+                    "award-numbers": 0.0,
+                    "ror-ids": 0.0,
+                    "update-policies": 0.0,
+                    "resource-links": 0.9761006289308176,
+                    "descriptions": 0.0
+                }
+            },
+            "current": {
+                "journal-article": {
+                    "last-status-check-time": 1787094865113,
+                    "affiliations": 0.0,
+                    "abstracts": 0.8654353562005277,
+                    "orcids": 0.4722955145118734,
+                    "affiliation-ror-ids": 0.0,
+                    "licenses": 0.9419525065963061,
+                    "references": 0.0,
+                    "funders": 0.0,
+                    "similarity-checking": 0.9261213720316623,
+                    "funder-ror-ids": 0.0,
+                    "award-numbers": 0.0,
+                    "ror-ids": 0.0,
+                    "update-policies": 0.0,
+                    "resource-links": 0.9287598944591029,
+                    "descriptions": 0.0
+                }
+            }
+        },
+        "flags": {
+            "deposits-abstracts-current": true,
+            "deposits-orcids-current": true,
+            "deposits-affiliation-ror-ids-current": false,
+            "deposits": true,
+            "deposits-affiliations-backfile": true,
+            "deposits-update-policies-backfile": false,
+            "deposits-similarity-checking-backfile": true,
+            "deposits-award-numbers-current": false,
+            "deposits-resource-links-current": true,
+            "deposits-ror-ids-current": false,
+            "deposits-articles": true,
+            "deposits-affiliations-current": false,
+            "deposits-affiliation-ror-ids-backfile": false,
+            "deposits-funders-current": false,
+            "deposits-references-backfile": false,
+            "deposits-funder-ror-ids-current": false,
+            "deposits-ror-ids-backfile": false,
+            "deposits-abstracts-backfile": true,
+            "deposits-licenses-backfile": true,
+            "deposits-award-numbers-backfile": false,
+            "deposits-descriptions-current": false,
+            "deposits-references-current": false,
+            "deposits-resource-links-backfile": true,
+            "deposits-descriptions-backfile": false,
+            "deposits-orcids-backfile": true,
+            "deposits-funders-backfile": false,
+            "deposits-funder-ror-ids-backfile": false,
+            "deposits-update-policies-current": false,
+            "deposits-similarity-checking-current": true,
+            "deposits-licenses-current": true
+        },
+        "location": "New York, NY, United States",
+        "names": [
+            "Columbia University Libraries",
+            "Columbia University Libraries/Information Services"
+        ]
+    }
+}

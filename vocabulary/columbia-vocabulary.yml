@@ -1,0 +1,104 @@
+generated: '2026-08-19'
+method: derived
+source: >-
+  Derived from response bodies observed on Columbia University surfaces on 2026-08-19 and from
+  Columbia's own published application source at https://github.com/cul/ldpd-hours. Columbia
+  publishes no data dictionary, glossary or vocabulary of its own for any surface.
+provider: Columbia University
+providerId: columbia
+x-operator: institution
+description: >-
+  The working vocabulary of Columbia University's own machine-readable surfaces. It is small
+  because the surface is small, and every term below is one that actually appears in a response
+  Columbia serves — nothing is imported from a generic higher-education model.
+terms:
+- term: location
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    A Columbia University Libraries service point with its own posted opening hours. Identified
+    by a short lowercase `code` rather than a numeric id.
+  observed_values: [ butler, butler-24, barnard, law, law-reference, social-work, lio ]
+- term: code
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    The stable, human-legible primary key for a location, used as both the path parameter and the
+    response map key. Columbia never publishes the full enumeration; a consumer discovers codes
+    only by reading the open_now response, which lists only locations open at that moment.
+- term: primary_location
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    A parent-child relationship between service points. A sub-location is suppressed from
+    open_now when its primary location is already open. The relationship exists in Columbia's
+    data model but is never exposed in any response — a consumer cannot learn that butler-24 is
+    subordinate to butler from the API.
+  x-exposure: internal_only
+- term: timetable
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    A single dated open/close window for one location. Carries the closed and tbd flags that
+    override the times.
+- term: tbd
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    A tri-state marker distinguishing "we have decided this location is closed" (closed=true)
+    from "we have not yet decided this location's hours" (tbd=true). A genuinely useful
+    distinction that most opening-hours models collapse.
+- term: formatted_date
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    A pre-rendered English display string. Misnamed: it contains a time range ("09:00AM-09:00PM")
+    or a time ("Until 09:00PM"), never a date. Presentation logic leaking into the contract.
+  x-defect: name_does_not_describe_content
+- term: note / short_note / short_note_url
+  domain: Campus Life / Library
+  surface: columbia:library-hours
+  definition: >-
+    Free-text annotations on a day, typically naming the academic period ("Intersession").
+    Unset values are returned as empty strings rather than null, so a consumer must treat "" and
+    absence as the same thing.
+- term: UNI
+  domain: Identity
+  surface: columbia:identity, columbia:opendata
+  definition: >-
+    Columbia University Network ID — the university-issued account identifier that is the sole
+    credential for every gated Columbia surface. Affiliation is the access model; there is no
+    external equivalent.
+- term: entityID
+  domain: Identity Federation
+  surface: columbia:identity
+  definition: >-
+    Columbia's federation identifier, urn:mace:incommon:columbia.edu. A MACE URN rather than a
+    URL, which is the older InCommon registration form and signals long-standing membership.
+- term: scope (shibmd)
+  domain: Identity Federation
+  surface: columbia:identity
+  definition: >-
+    The SAML security domain Columbia's IdP is authoritative for — columbia.edu, non-regexp. An
+    assertion scoped to anything else from this IdP is invalid. Not to be confused with an OAuth
+    scope; Columbia publishes none of those.
+- term: DOI prefix 10.7916
+  domain: Research Identifiers
+  surface: columbia:dlc, columbia:academic-commons
+  definition: >-
+    Columbia University Libraries' own DataCite prefix, registered under client CUL.COLUMBIA,
+    carrying 1,111,628 registered DOIs that resolve to Columbia hosts. Columbia's persistent
+    identifier namespace, not a vendor's.
+- term: MARCXML extract
+  domain: Library
+  surface: columbia:clio-opendata
+  definition: >-
+    A gzipped batch of MARC21 bibliographic and holdings records from the integrated library
+    system behind CLIO, released under CC0 1.0. Distributed as a numbered file sequence plus a
+    deletes list, with no manifest and no harvesting protocol.
+notes: >-
+  Two absences are worth naming. Columbia publishes no vocabulary at all for its course data —
+  the Directory of Classes is HTML only, and the only machine-readable expression of Columbia
+  course structure is a third-party crawl. And the repository vocabulary that would normally be
+  the richest part of a university profile (Dublin Core, MODS, ETD-MS) sits behind the Libraries'
+  anti-crawler challenge and could not be read.

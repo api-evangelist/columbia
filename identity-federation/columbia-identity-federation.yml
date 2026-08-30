@@ -1,0 +1,99 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Columbia University's production Shibboleth Identity Provider metadata, fetched live on
+  2026-08-19 from https://shibboleth.columbia.edu/idp/shibboleth (HTTP 200,
+  application/xml;charset=UTF-8, 6,212 bytes).
+provider: Columbia University
+providerId: columbia
+x-operator: institution
+x-operator-evidence: >-
+  shibboleth.columbia.edu resolves to shibboleth.l.columbia.edu / 128.59.105.181, inside
+  Columbia University's own address space, under a TLS certificate with subject C=US, ST=New York,
+  O=Columbia University, CN=*.columbia.edu, issued by InCommon RSA OV SSL CA 3. The metadata
+  document describes itself as "Columbia Shibboleth idp production instance metadata".
+description: >-
+  Identity federation is the surface class this cohort most often fails to record, and Columbia
+  has a real one. The university runs its own Shibboleth Identity Provider, publishes its SAML
+  metadata anonymously at a stable URL, and participates in the InCommon Federation under the
+  MACE URN entityID that InCommon issues only to registered participants. No vendor is involved:
+  the software is Shibboleth, the host is Columbia's, the certificate is Columbia's, and the
+  signing key is Columbia's own self-issued X.509 valid to 2044.
+federation:
+  entity_id: urn:mace:incommon:columbia.edu
+  federation: InCommon Federation
+  federation_operator: Internet2 / InCommon LLC
+  scope: columbia.edu
+  scope_regexp: false
+  display_name: Columbia University
+  information_url: https://www.columbia.edu/
+  privacy_statement_url: https://universitypolicies.columbia.edu/content/acceptable-usage-information-resources-policy
+  logo: https://shibboleth.columbia.edu/idp/images/cu.png
+  metadata_url: https://shibboleth.columbia.edu/idp/shibboleth
+  metadata_dynamic: false
+  metadata_signed: false
+  roles:
+  - IDPSSODescriptor
+  protocols:
+  - urn:oasis:names:tc:SAML:2.0:protocol
+  - urn:oasis:names:tc:SAML:1.1:protocol
+  - urn:mace:shibboleth:1.0
+  keys:
+  - use: signing
+    type: X.509
+    subject_cn: shibboleth.columbia.edu
+    serial: '1213858636935703359846821668542959572209600725002'
+    not_after: '2044-05-16T19:12:11Z'
+    subject_alt_names:
+    - shibboleth.columbia.edu
+    - https://shibboleth.columbia.edu/idp/shibboleth
+  - use: encryption
+    type: X.509
+  endpoints:
+  - service: SingleSignOnService
+    binding: urn:mace:shibboleth:1.0:profiles:AuthnRequest
+    location: https://shibboleth.columbia.edu/idp/profile/Shibboleth/SSO
+  - service: SingleSignOnService
+    binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+    location: https://shibboleth.columbia.edu/idp/profile/SAML2/POST/SSO
+  - service: SingleSignOnService
+    binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+    location: https://shibboleth.columbia.edu/idp/profile/SAML2/POST-SimpleSign/SSO
+  - service: SingleSignOnService
+    binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+    location: https://shibboleth.columbia.edu/idp/profile/SAML2/Redirect/SSO
+  - service: SingleLogoutService
+    binding: urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+    location: https://cas.columbia.edu/cas/logout
+related:
+  cas:
+    url: https://cas.columbia.edu/cas
+    x-operator: institution
+    description: >-
+      Columbia's CAS server, which handles browser SSO with UNI credentials and MFA and which the
+      IdP delegates single logout to. Live, HTTP 200 at /cas/login.
+  documentation:
+    url: https://www.cuit.columbia.edu/web-authentication-federation
+    status: 403
+    note: >-
+      CUIT's own documentation of this service sits behind a Cloudflare managed challenge and
+      could not be read on this run. The pointer is retained because the host answers and the
+      path was previously verified, but it is not claimed as readable evidence.
+gaps:
+- No entity categories are declared. The metadata carries no REFEDS Research & Scholarship
+  (http://refeds.org/category/research-and-scholarship) or GEANT Data Protection Code of Conduct
+  entity attribute, both of which are the normal way an IdP signals attribute release policy to
+  federated services.
+- No mdui:Keywords, no contact person elements (technical, support or security), and no
+  RegistrationInfo block in the published document.
+- The document states plainly that it "is not dynamic - it will not change as your configuration
+  changes", so a relying party consuming this URL directly is consuming a hand-maintained file
+  rather than live IdP state.
+- No SPSSODescriptor, so this document describes Columbia only as an identity provider, never as
+  a consumer of other federations' identities.
+- No eduGAIN registration was verified on this run; InCommon interfederates with eduGAIN, but
+  Columbia's eduGAIN entry was not independently confirmed and is not claimed.
+notes: >-
+  This is the strongest machine-readable artifact Columbia University publishes about itself, and
+  it is one almost no catalogue records for any institution. It costs Columbia nothing to expose
+  and it is genuinely theirs.

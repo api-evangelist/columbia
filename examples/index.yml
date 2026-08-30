@@ -1,0 +1,101 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live responses captured from Columbia University surfaces on 2026-08-19, plus two third-party
+  registry records that evidence Columbia's own DOI infrastructure. Nothing in this folder is
+  synthesized; every file is a verbatim response body.
+provider: Columbia University
+providerId: columbia
+description: >-
+  Response examples for the surfaces Columbia University actually operates. Five of the eight
+  files come from the Libraries Hours API, the only unauthenticated institution-operated JSON API
+  found in Columbia's estate. The remaining three evidence identity federation and DOI
+  registration.
+examples:
+- file: columbia-library-hours-open-now-example.json
+  operation: GET /api/v1/locations/open_now
+  host: hours.library.columbia.edu
+  x-operator: institution
+  status: 200
+  content_type: application/json; charset=utf-8
+  method: probed
+  source: https://hours.library.columbia.edu/api/v1/locations/open_now
+  description: >-
+    Seven Columbia library locations open at capture time, keyed by location code, each carrying
+    open_time, close_time and a human formatted_date string.
+- file: columbia-library-hours-location-day-example.json
+  operation: GET /api/v1/locations/{code}?date=today
+  host: hours.library.columbia.edu
+  x-operator: institution
+  status: 200
+  method: probed
+  source: https://hours.library.columbia.edu/api/v1/locations/butler?date=today
+  description: >-
+    Single-day posted hours for Butler Library, including the academic-period note field
+    ("Intersession") and the closed/tbd booleans.
+- file: columbia-library-hours-location-range-example.json
+  operation: GET /api/v1/locations/{code}?start_date&end_date
+  host: hours.library.columbia.edu
+  x-operator: institution
+  status: 200
+  method: probed
+  source: https://hours.library.columbia.edu/api/v1/locations/butler?start_date=2026-08-19&end_date=2026-08-21
+  description: Three consecutive days of posted hours for Butler Library, showing the array shape.
+- file: columbia-library-hours-error-400-example.json
+  operation: GET /api/v1/locations/{code}?date=notadate
+  host: hours.library.columbia.edu
+  x-operator: institution
+  status: 400
+  method: probed
+  source: https://hours.library.columbia.edu/api/v1/locations/butler?date=notadate
+  description: >-
+    The service's bad-request envelope. Correct status code, but the only machine-readable part
+    is the HTTP status repeated as a text prefix inside a human message.
+- file: columbia-library-hours-error-404-example.json
+  operation: GET /api/v1/locations/{code}
+  host: hours.library.columbia.edu
+  x-operator: institution
+  status: 404
+  method: probed
+  source: https://hours.library.columbia.edu/api/v1/locations/nosuchplace?date=today
+  description: The not-found envelope for an unknown location code.
+- file: columbia-shibboleth-idp-metadata-example.xml
+  host: shibboleth.columbia.edu
+  x-operator: institution
+  status: 200
+  content_type: application/xml;charset=UTF-8
+  method: probed
+  source: https://shibboleth.columbia.edu/idp/shibboleth
+  description: >-
+    Columbia's production Shibboleth Identity Provider SAML metadata. entityID
+    urn:mace:incommon:columbia.edu, shibmd:Scope columbia.edu, protocolSupportEnumeration
+    covering SAML 2.0, SAML 1.1 and Shibboleth 1.0, two X.509 key descriptors (signing and
+    encryption), four SSO endpoints and a SingleLogoutService that hands off to
+    cas.columbia.edu/cas/logout. The single most substantial machine-readable artifact Columbia
+    publishes about itself.
+- file: columbia-datacite-client-example.json
+  host: api.datacite.org
+  x-operator: institution
+  status: 200
+  method: searched
+  source: https://api.datacite.org/clients/cul.columbia
+  description: >-
+    DataCite's registry record for repository client CUL.COLUMBIA — Columbia University
+    Libraries, active since 2018, clientType repository, url library.columbia.edu. Evidences
+    Columbia's own DOI minting under prefix 10.7916. Retrieved from DataCite because DataCite is
+    the registry of record; the fact it evidences is Columbia's.
+- file: columbia-crossref-member-example.json
+  host: api.crossref.org
+  x-operator: institution
+  status: 200
+  method: searched
+  source: https://api.crossref.org/members/6984
+  description: >-
+    Crossref's member record for Columbia University Libraries (member 6984), carrying its
+    deposit counts and registered prefixes. Columbia University Press is a separate Crossref
+    member (4359).
+notes: >-
+  There are no examples here for the Open Data Service, the Directory of Classes, Academic
+  Commons or the CLIO discovery layer. That is not an omission — those hosts are either behind a
+  UNI login, behind a Cloudflare interstitial, or behind an Anubis proof-of-work challenge, and
+  no unauthenticated response body could be captured. See x-coverage in apis.yml.

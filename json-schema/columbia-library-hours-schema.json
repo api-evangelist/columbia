@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/columbia/main/json-schema/columbia-library-hours-schema.json",
+  "title": "Columbia University Libraries Hours API response schemas",
+  "description": "Response shapes for the Columbia University Libraries Hours API at hours.library.columbia.edu/api/v1. Derived from live responses observed on 2026-08-19 and from Columbia's own published Rails source at github.com/cul/ldpd-hours. Columbia publishes no schema of its own for this service.",
+  "x-provenance": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "openapi/columbia-library-hours-openapi.yml",
+    "derived_from": "Live probes of https://hours.library.columbia.edu/api/v1 plus https://github.com/cul/ldpd-hours",
+    "x-operator": "institution",
+    "x-operator-evidence": "hours.library.columbia.edu resolves into Columbia University address space (128.59.222.118) under a TLS certificate issued to O=Columbia University by InCommon/Internet2."
+  },
+  "$defs": {
+    "OpenWindow": {
+      "type": "object",
+      "description": "The current opening window for one location.",
+      "required": ["open_time", "close_time", "formatted_date"],
+      "additionalProperties": false,
+      "properties": {
+        "open_time": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$", "description": "Local opening time, 24-hour HH:MM, America/New_York. The API declares no timezone." },
+        "close_time": { "type": "string", "pattern": "^[0-2][0-9]:[0-5][0-9]$", "description": "Local closing time, 24-hour HH:MM." },
+        "formatted_date": { "type": "string", "description": "Human display string such as 'Until 09:00PM'. Named formatted_date but carries a time." }
+      }
+    },
+    "DayHours": {
+      "type": "object",
+      "description": "Posted hours for one location on one calendar date.",
+      "required": ["date", "closed", "tbd", "formatted_date"],
+      "additionalProperties": false,
+      "properties": {
+        "date": { "type": "string", "format": "date" },
+        "open_time": { "type": ["string", "null"], "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+        "close_time": { "type": ["string", "null"], "pattern": "^[0-2][0-9]:[0-5][0-9]$" },
+        "closed": { "type": "boolean" },
+        "tbd": { "type": "boolean", "description": "Hours for this date have not yet been decided." },
+        "note": { "type": ["string", "null"], "description": "Free-text note, typically the academic period." },
+        "short_note": { "type": ["string", "null"] },
+        "short_note_url": { "type": ["string", "null"], "description": "Empty string when unset, not null." },
+        "formatted_date": { "type": "string" }
+      }
+    },
+    "OpenNowResponse": {
+      "type": "object",
+      "required": ["data"],
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "description": "Map of location code to current opening window. Null when no location is open — callers must handle both shapes.",
+          "oneOf": [
+            { "type": "null" },
+            { "type": "object", "additionalProperties": { "$ref": "#/$defs/OpenWindow" } }
+          ]
+        }
+      }
+    },
+    "LocationHoursResponse": {
+      "type": "object",
+      "required": ["data"],
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "type": "object",
+          "description": "Single-key map of the requested location code to its list of daily entries.",
+          "additionalProperties": { "type": "array", "items": { "$ref": "#/$defs/DayHours" } }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "required": ["error", "data"],
+      "additionalProperties": false,
+      "properties": {
+        "error": {
+          "type": "object",
+          "required": ["msg"],
+          "additionalProperties": false,
+          "properties": {
+            "msg": { "type": "string", "description": "Human message carrying the HTTP status as a text prefix. There is no machine-readable error code an agent can branch on." }
+          }
+        },
+        "data": { "type": "null" }
+      }
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/OpenNowResponse" },
+    { "$ref": "#/$defs/LocationHoursResponse" },
+    { "$ref": "#/$defs/ErrorResponse" }
+  ]
+}
