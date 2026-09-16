@@ -1,29 +1,24 @@
----
 aid: columbia
 name: Columbia University
-description: >-
-  Columbia University is a private Ivy League research university in New York City, ranked
-  seventeenth in the QS World University Rankings. Its programmable footprint is small, real, and
-  almost entirely invisible from the outside. Columbia operates exactly one publicly consumable,
-  unauthenticated API of its own: the Columbia University Libraries Hours API at
-  hours.library.columbia.edu, two read operations returning JSON with CORS enabled, built on
-  Columbia's own openly published Rails codebase and documented by nobody. Alongside it the
-  university runs a production Shibboleth Identity Provider that publishes signed SAML 2.0
-  metadata under the InCommon entityID urn:mace:incommon:columbia.edu, mints DOIs under its own
-  DataCite prefix 10.7916 across 1.1 million registered identifiers, deposits into Crossref as
-  member 6984, and releases the entire CLIO library catalogue as CC0 MARCXML bulk extracts. That
-  is the whole of it. The Open Data Service that Columbia describes as its developer-facing
-  service is gated behind a UNI login, and the IRI/LDEO Climate Data Library now redirects its
-  data paths to a login form. Columbia publishes no OpenAPI, no developer portal reachable
-  without affiliation, no changelog, no llms.txt and no API terms, and it reserves the hostname
-  api.library.columbia.edu while serving nothing but a placeholder there. Most consequentially
-  for machine access, Columbia defends its estate with two different anti-bot products: a
-  Cloudflare managed challenge across the central web estate, and an Anubis proof-of-work
-  challenge in front of the Libraries' entire discovery layer — the CLIO catalogue, Academic
-  Commons and GeoData — which returns HTTP 200 with a bot-check body and made the institution's
-  OAI-PMH endpoint unverifiable. Learning management runs on Instructure's Canvas and the
-  research data platform on Redivis; both are tenant relationships, recorded as such and scored
-  against their vendors.
+description: 'Columbia University is a private Ivy League research university in New York City, ranked
+  seventeenth in the QS World University Rankings. Its programmable footprint is small, real, and almost
+  entirely invisible from the outside. Columbia operates exactly one publicly consumable, unauthenticated
+  API of its own: the Columbia University Libraries Hours API at hours.library.columbia.edu, two read
+  operations returning JSON with CORS enabled, built on Columbia''s own openly published Rails codebase
+  and documented by nobody. Alongside it the university runs a production Shibboleth Identity Provider
+  that publishes signed SAML 2.0 metadata under the InCommon entityID urn:mace:incommon:columbia.edu,
+  mints DOIs under its own DataCite prefix 10.7916 across 1.1 million registered identifiers, deposits
+  into Crossref as member 6984, and releases the entire CLIO library catalogue as CC0 MARCXML bulk extracts.
+  That is the whole of it. The Open Data Service that Columbia describes as its developer-facing service
+  is gated behind a UNI login, and the IRI/LDEO Climate Data Library now redirects its data paths to a
+  login form. Columbia publishes no OpenAPI, no developer portal reachable without affiliation, no changelog,
+  no llms.txt and no API terms, and it reserves the hostname api.library.columbia.edu while serving nothing
+  but a placeholder there. Most consequentially for machine access, Columbia defends its estate with two
+  different anti-bot products: a Cloudflare managed challenge across the central web estate, and an Anubis
+  proof-of-work challenge in front of the Libraries'' entire discovery layer — the CLIO catalogue, Academic
+  Commons and GeoData — which returns HTTP 200 with a bot-check body and made the institution''s OAI-PMH
+  endpoint unverifiable. Learning management runs on Instructure''s Canvas and the research data platform
+  on Redivis; both are tenant relationships, recorded as such and scored against their vendors.'
 type: Index
 deliveryModel:
   model: unknown
@@ -57,37 +52,36 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/columbia.png
 url: https://raw.githubusercontent.com/api-evangelist/columbia/refs/heads/main/apis.yml
 tags:
-  - University
-  - Higher Education
-  - Education
-  - Ivy League
-  - Private Research University
-  - United States
-  - New York
-  - Identity Federation
-  - Library
-  - Open Data
-  - Research Repository
-  - Research Data
-  - Course Catalog
-  - Campus Life
+- University
+- Higher Education
+- Education
+- Ivy League
+- Private Research University
+- United States
+- New York
+- Identity Federation
+- Library
+- Open Data
+- Research Repository
+- Research Data
+- Course Catalog
+- Campus Life
 created: '2026-06-03'
-modified: '2026-08-19'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 x-type: university
 x-category: Private Research University
 apis:
 - aid: columbia:identity
   name: Columbia Identity — Shibboleth IdP and CAS
-  description: >-
-    Columbia University Information Technology operates the university's own identity infrastructure:
+  description: 'Columbia University Information Technology operates the university''s own identity infrastructure:
     a production Shibboleth Identity Provider publishing signed SAML 2.0 metadata anonymously under the
     InCommon entityID urn:mace:incommon:columbia.edu, and a CAS server handling browser single sign-on
     with UNI credentials and MFA. The metadata is the most substantial machine-readable artifact Columbia
     publishes about itself — two X.509 key descriptors, four SSO endpoints, three SAML bindings, a declared
     scope of columbia.edu and a logout handoff to CAS. It is readable by anyone and actionable by nobody
     outside the university: relying parties are registered by CUIT and there is no public or dynamic registration.
-    No OpenID Connect discovery document is published.
+    No OpenID Connect discovery document is published.'
   humanURL: https://www.cuit.columbia.edu/web-authentication-federation
   baseURL: https://shibboleth.columbia.edu/idp
   tags:
@@ -113,23 +107,21 @@ apis:
   - type: Signup
     url: https://www.cuit.columbia.edu/cas-authentication/registration
   x-operator: institution
-  x-operator-evidence: >-
-    shibboleth.columbia.edu -> 128.59.105.181 and cas.columbia.edu -> 128.59.105.39, both in Columbia
-    University address space, under a TLS certificate subject O=Columbia University, CN=*.columbia.edu
-    issued by InCommon RSA OV SSL CA 3. The metadata document self-describes as "Columbia Shibboleth idp
-    production instance metadata".
+  x-operator-evidence: shibboleth.columbia.edu -> 128.59.105.181 and cas.columbia.edu -> 128.59.105.39,
+    both in Columbia University address space, under a TLS certificate subject O=Columbia University,
+    CN=*.columbia.edu issued by InCommon RSA OV SSL CA 3. The metadata document self-describes as "Columbia
+    Shibboleth idp production instance metadata".
   x-access: public
   x-status: 200 application/xml, probed 2026-08-19
 - aid: columbia:clio-opendata
   name: CLIO Library Catalog Open Data
-  description: >-
-    Columbia University Libraries publishes its full catalogue — bibliographic and holdings records from
-    the integrated library system behind CLIO — as gzipped MARCXML bulk extracts under a CC0 1.0 Public
-    Domain Dedication, refreshed monthly, alongside a deletes file. 108 files were present in the extract
-    directory at probe time, served from an open Apache directory index with no credential and no rate
-    limit. Covers books, serials, music, video and manuscripts; excludes Law Library and ReCAP partner
-    records. There is no manifest, no checksum, no change feed and no harvesting protocol — a consumer
-    diffs the directory listing.
+  description: Columbia University Libraries publishes its full catalogue — bibliographic and holdings
+    records from the integrated library system behind CLIO — as gzipped MARCXML bulk extracts under a
+    CC0 1.0 Public Domain Dedication, refreshed monthly, alongside a deletes file. 108 files were present
+    in the extract directory at probe time, served from an open Apache directory index with no credential
+    and no rate limit. Covers books, serials, music, video and manuscripts; excludes Law Library and ReCAP
+    partner records. There is no manifest, no checksum, no change feed and no harvesting protocol — a
+    consumer diffs the directory listing.
   humanURL: https://library.columbia.edu/bts/clio-data.html
   baseURL: https://lito.cul.columbia.edu/extracts/ColumbiaLibraryCatalog/full/
   tags:
@@ -147,16 +139,14 @@ apis:
   - type: Lifecycle
     url: lifecycle/columbia-lifecycle.yml
   x-operator: institution
-  x-operator-evidence: >-
-    lito.cul.columbia.edu resolves to lito-apache-prod2.cul.columbia.edu / 128.59.222.64, in Columbia
-    University Libraries' own address space. The extracts are generated from Columbia's own ILS and released
-    under Columbia's own CC0 dedication.
+  x-operator-evidence: lito.cul.columbia.edu resolves to lito-apache-prod2.cul.columbia.edu / 128.59.222.64,
+    in Columbia University Libraries' own address space. The extracts are generated from Columbia's own
+    ILS and released under Columbia's own CC0 dedication.
   x-access: public
   x-status: 200, 108 extract files listed, probed 2026-08-19
 - aid: columbia:opendata
   name: Columbia Open Data Service
-  description: >-
-    The central university service publishing data feeds to software developers in programming-friendly
+  description: 'The central university service publishing data feeds to software developers in programming-friendly
     formats such as JSON and XML — the course directory, the CLIO library catalogue and building access
     among them — with documented refresh schedules, data diagrams and element documentation. It is the
     closest thing Columbia has to a developer portal, and access is affiliation-gated: any member of the
@@ -164,7 +154,7 @@ apis:
     or application tier for anyone else. On this run the service and its documentation were unreadable
     — the host sits behind a Cloudflare managed challenge that returns HTTP 403 to every non-browser client,
     including one presenting full browser headers. The access model described here is carried forward
-    from the June 2026 profile and is not re-verified.
+    from the June 2026 profile and is not re-verified.'
   humanURL: https://opendataservice.columbia.edu/
   tags:
   - Open Data
@@ -184,14 +174,14 @@ apis:
   x-status: 403 Cloudflare managed challenge, probed 2026-08-19
 - aid: columbia:directory-of-classes
   name: CU Directory of Classes
-  description: >-
-    The public web directory of Columbia University class offerings, browsable by subject, department,
-    semester, instruction method, weekday and start time. Live and fully readable, and HTML only — there
-    is no documented API, no JSON feed and no machine-readable expression of Columbia's course vocabulary
-    published by the university anywhere. The registrar's own Vergil course search sits behind the Cloudflare
-    challenge. Recorded because course catalog is one of the surface classes a university genuinely operates,
-    and Columbia operates this one without a contract. Third-party projects crawl this directory and republish
-    it as JSON; those are not Columbia's and are deliberately not linked here as Columbia's.
+  description: The public web directory of Columbia University class offerings, browsable by subject,
+    department, semester, instruction method, weekday and start time. Live and fully readable, and HTML
+    only — there is no documented API, no JSON feed and no machine-readable expression of Columbia's course
+    vocabulary published by the university anywhere. The registrar's own Vergil course search sits behind
+    the Cloudflare challenge. Recorded because course catalog is one of the surface classes a university
+    genuinely operates, and Columbia operates this one without a contract. Third-party projects crawl
+    this directory and republish it as JSON; those are not Columbia's and are deliberately not linked
+    here as Columbia's.
   humanURL: https://doc.sis.columbia.edu/
   tags:
   - Courses
@@ -204,23 +194,21 @@ apis:
   - type: Documentation
     url: https://doc.sis.columbia.edu/
   x-operator: institution
-  x-operator-evidence: >-
-    doc.sis.columbia.edu resolves to miscredirect-prod.cc.columbia.edu / 128.59.44.55, in Columbia University
-    address space.
+  x-operator-evidence: doc.sis.columbia.edu resolves to miscredirect-prod.cc.columbia.edu / 128.59.44.55,
+    in Columbia University address space.
   x-access: public
   x-status: 200 text/html, no machine-readable representation, probed 2026-08-19
 - aid: columbia:academic-commons
   name: Columbia Academic Commons
-  description: >-
-    Columbia University's institutional research repository, holding the scholarly output, theses and
-    research data of the university. Unusually for this cohort it is NOT a vendor tenancy: it runs on
-    Hyrax/Blacklight — open-source repository software the Libraries help maintain — on Columbia's own
-    host and hardware, with Columbia's own DOIs. The repository is therefore institution-operated in full.
-    It could not be verified on this run: every request, including the OAI-PMH path and including requests
-    presenting full browser headers, returns an Anubis proof-of-work interstitial with HTTP 200 and a
-    bot-check body. No contract, schema or OAI Identify response is claimed for it, and no scored pointer
-    is emitted to the host, because an Anubis-challenged host is indistinguishable from a soft-404 to
-    an automated prober.
+  description: 'Columbia University''s institutional research repository, holding the scholarly output,
+    theses and research data of the university. Unusually for this cohort it is NOT a vendor tenancy:
+    it runs on Hyrax/Blacklight — open-source repository software the Libraries help maintain — on Columbia''s
+    own host and hardware, with Columbia''s own DOIs. The repository is therefore institution-operated
+    in full. It could not be verified on this run: every request, including the OAI-PMH path and including
+    requests presenting full browser headers, returns an Anubis proof-of-work interstitial with HTTP 200
+    and a bot-check body. No contract, schema or OAI Identify response is claimed for it, and no scored
+    pointer is emitted to the host, because an Anubis-challenged host is indistinguishable from a soft-404
+    to an automated prober.'
   humanURL: https://academiccommons.columbia.edu/
   tags:
   - Research Repository
@@ -233,21 +221,20 @@ apis:
   - type: Conformance
     url: conformance/columbia-conformance.yml
   x-operator: institution
-  x-operator-evidence: >-
-    academiccommons.columbia.edu resolves to ac-rails-prod1.cul.columbia.edu / 128.59.222.111, in Columbia
-    University Libraries' own address space. No vendor CNAME. Columbia University Libraries maintains
-    its own forks of hyrax, blacklight and blacklight_oai_provider in the cul GitHub organisation.
+  x-operator-evidence: academiccommons.columbia.edu resolves to ac-rails-prod1.cul.columbia.edu / 128.59.222.111,
+    in Columbia University Libraries' own address space. No vendor CNAME. Columbia University Libraries
+    maintains its own forks of hyrax, blacklight and blacklight_oai_provider in the cul GitHub organisation.
   x-access: blocked
   x-status: 200 Anubis proof-of-work challenge body, probed 2026-08-19
 - aid: columbia:dlc
   name: Digital Library Collections and the 10.7916 DOI namespace
-  description: >-
-    Columbia University Libraries' digital collections platform and the resolution target for Columbia's
-    own DOI namespace. Columbia is a registered DataCite repository client (CUL.COLUMBIA, active since
-    2018) minting under prefix 10.7916, with 1,111,628 DOIs registered at probe time, resolving to dlc.library.columbia.edu.
-    It is Columbia's own persistent-identifier infrastructure — only the registry is DataCite's. Columbia
-    University Libraries separately deposits into Crossref as member 6984. The platform serves HTML; no
-    IIIF manifest endpoint or JSON API was reachable, and iiif.library.columbia.edu does not resolve.
+  description: Columbia University Libraries' digital collections platform and the resolution target for
+    Columbia's own DOI namespace. Columbia is a registered DataCite repository client (CUL.COLUMBIA, active
+    since 2018) minting under prefix 10.7916, with 1,111,628 DOIs registered at probe time, resolving
+    to dlc.library.columbia.edu. It is Columbia's own persistent-identifier infrastructure — only the
+    registry is DataCite's. Columbia University Libraries separately deposits into Crossref as member
+    6984. The platform serves HTML; no IIIF manifest endpoint or JSON API was reachable, and iiif.library.columbia.edu
+    does not resolve.
   humanURL: https://dlc.library.columbia.edu/
   tags:
   - Digital Collections
@@ -262,22 +249,20 @@ apis:
   - type: Examples
     url: examples/index.yml
   x-operator: institution
-  x-operator-evidence: >-
-    DataCite client CUL.COLUMBIA is registered to Columbia University Libraries against library.columbia.edu;
-    DOIs under prefix 10.7916 resolve to dlc.library.columbia.edu, a Columbia host. Crossref member 6984
-    is Columbia University Libraries.
+  x-operator-evidence: DataCite client CUL.COLUMBIA is registered to Columbia University Libraries against
+    library.columbia.edu; DOIs under prefix 10.7916 resolve to dlc.library.columbia.edu, a Columbia host.
+    Crossref member 6984 is Columbia University Libraries.
   x-access: public
   x-status: 200 text/html, probed 2026-08-19
 - aid: columbia:iri-data-library
   name: IRI/LDEO Climate Data Library
-  description: >-
-    The Climate Data Library run by the International Research Institute for Climate and Society and the
-    Lamont-Doherty Earth Observatory, both Columbia University units. A long-running research-computing
+  description: 'The Climate Data Library run by the International Research Institute for Climate and Society
+    and the Lamont-Doherty Earth Observatory, both Columbia University units. A long-running research-computing
     surface with its own URL-based dataset query language, OPeNDAP access and OGC WMS output, and historically
     one of the more genuinely programmable things any university operated. It is recorded here with a
     material access change: the landing pages still return 200, but every data path probed — /SOURCES/,
     the OPeNDAP endpoints and a WMS GetCapabilities request — now redirects to /auth/login. Presence without
-    access, announced nowhere machine-readable.
+    access, announced nowhere machine-readable.'
   humanURL: https://iridl.ldeo.columbia.edu/
   baseURL: https://iridl.ldeo.columbia.edu/SOURCES/
   tags:
@@ -293,20 +278,18 @@ apis:
   - type: Lifecycle
     url: lifecycle/columbia-lifecycle.yml
   x-operator: institution
-  x-operator-evidence: >-
-    iridl.ldeo.columbia.edu resolves to iridls0.iri.columbia.edu / 129.236.110.88, Columbia University
-    address space, operated by Columbia's IRI and Lamont-Doherty Earth Observatory.
+  x-operator-evidence: iridl.ldeo.columbia.edu resolves to iridls0.iri.columbia.edu / 129.236.110.88,
+    Columbia University address space, operated by Columbia's IRI and Lamont-Doherty Earth Observatory.
   x-access: gated
   x-status: 302 to /auth/login on every data path, probed 2026-08-19
 - aid: columbia:courseworks
   name: CourseWorks (Instructure Canvas)
-  description: >-
-    Columbia's learning management system. The REST API is live and returns a well-structured JSON 401
-    to unauthenticated callers, and the LTI 1.3 tool-platform JWKS is publicly readable — the best-formed
-    error envelope and the only LTI conformance in Columbia's estate, and neither of them is Columbia's
-    engineering. Columbia's courses and students, Instructure's contract. Recorded as a tenant relationship;
-    the contract is deliberately not saved under this institution and the LTI conformance is credited
-    to the tenant.
+  description: Columbia's learning management system. The REST API is live and returns a well-structured
+    JSON 401 to unauthenticated callers, and the LTI 1.3 tool-platform JWKS is publicly readable — the
+    best-formed error envelope and the only LTI conformance in Columbia's estate, and neither of them
+    is Columbia's engineering. Columbia's courses and students, Instructure's contract. Recorded as a
+    tenant relationship; the contract is deliberately not saved under this institution and the LTI conformance
+    is credited to the tenant.
   humanURL: https://courseworks2.columbia.edu/
   baseURL: https://courseworks2.columbia.edu/api/v1
   tags:
@@ -319,21 +302,19 @@ apis:
   - type: Conformance
     url: conformance/columbia-conformance.yml
   x-operator: tenant
-  x-operator-evidence: >-
-    courseworks2.columbia.edu CNAMEs to columbiasce.instructure.com -> cluster377.instructure.com and
-    terminates on an AWS us-east-1 load balancer. No Columbia-operated infrastructure is involved.
+  x-operator-evidence: courseworks2.columbia.edu CNAMEs to columbiasce.instructure.com -> cluster377.instructure.com
+    and terminates on an AWS us-east-1 load balancer. No Columbia-operated infrastructure is involved.
   x-access: gated
   x-status: 401 application/json on /api/v1/accounts, 200 on the LTI JWKS, probed 2026-08-19
 - aid: columbia:redivis
   name: Columbia University Data Platform (Redivis)
-  description: >-
-    Columbia's research data platform runs on Redivis as an institution-specific tenancy, and the university
-    has registered two distinct DataCite repository clients against it — CUL.CUIT "Columbia University
-    Data Platform" and CUL.REDIVIS "Academic Commons Data Collection", the latter created in 2026. This
-    is a real and recent institutional fact: a slice of Columbia's research data publishing has moved
-    onto a commercial platform under Columbia's own DOI registrations. The data and the DOI registrations
-    are Columbia's; the platform, the API and the contract are Redivis's, so no Redivis contract is saved
-    under this institution.
+  description: 'Columbia''s research data platform runs on Redivis as an institution-specific tenancy,
+    and the university has registered two distinct DataCite repository clients against it — CUL.CUIT "Columbia
+    University Data Platform" and CUL.REDIVIS "Academic Commons Data Collection", the latter created in
+    2026. This is a real and recent institutional fact: a slice of Columbia''s research data publishing
+    has moved onto a commercial platform under Columbia''s own DOI registrations. The data and the DOI
+    registrations are Columbia''s; the platform, the API and the contract are Redivis''s, so no Redivis
+    contract is saved under this institution.'
   humanURL: https://columbia.redivis.com/
   tags:
   - Research Data
@@ -344,9 +325,8 @@ apis:
   - type: Documentation
     url: https://columbia.redivis.com/academic_commons
   x-operator: tenant
-  x-operator-evidence: >-
-    columbia.redivis.com is an institution-specific subdomain on the Redivis platform, not a Columbia
-    host. DataCite clients CUL.CUIT and CUL.REDIVIS both register redivis.com URLs.
+  x-operator-evidence: columbia.redivis.com is an institution-specific subdomain on the Redivis platform,
+    not a Columbia host. DataCite clients CUL.CUIT and CUL.REDIVIS both register redivis.com URLs.
 - aid: columbia:columbia-locations-api
   name: Columbia University Locations API
   description: Library locations and their posted opening hours.
@@ -376,103 +356,99 @@ apis:
   - type: GitHubRepository
     url: https://github.com/cul/ldpd-hours
 common:
-  - type: Website
-    url: https://www.columbia.edu/
-  - type: DeveloperPortal
-    url: https://opendataservice.columbia.edu/
-  - type: OpenData
-    url: https://library.columbia.edu/bts/clio-data.html
-  - type: LibraryCatalog
-    url: https://library.columbia.edu/
-  - type: CourseCatalog
-    url: https://doc.sis.columbia.edu/
-  - type: IdentityFederation
-    url: https://shibboleth.columbia.edu/idp/shibboleth
-  - type: ResearchComputing
-    url: https://iridl.ldeo.columbia.edu/
-  - type: Authentication
-    url: https://www.cuit.columbia.edu/web-authentication-federation
-  - type: GitHubOrganization
-    url: https://github.com/cul
-  - type: GitHubOrganization
-    url: https://github.com/columbia-it
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/columbia-university/
-  - type: OpenAPI
-    url: openapi/columbia-library-hours-openapi.yml
-  - type: JSONSchema
-    url: json-schema/columbia-library-hours-schema.json
-  - type: Examples
-    url: examples/index.yml
-  - type: Rules
-    url: rules/columbia-rules.yml
-  - type: Vocabulary
-    url: vocabulary/columbia-vocabulary.yml
-  - type: JSONLD
-    url: json-ld/columbia-context.jsonld
-  - type: Authentication
-    url: authentication/columbia-authentication.yml
-  - type: Scopes
-    url: scopes/columbia-scopes.yml
-  - type: Errors
-    url: errors/columbia-errors.yml
-  - type: Conformance
-    url: conformance/columbia-conformance.yml
-  - type: Lifecycle
-    url: lifecycle/columbia-lifecycle.yml
-  - type: AgenticAccess
-    url: agentic-access/columbia-agentic-access.yml
-  - type: DomainSecurity
-    url: security/columbia-domain-security.yml
-  - type: Plans
-    url: plans/columbia-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/columbia-rate-limits.yml
-  - type: FinOps
-    url: finops/columbia-finops.yml
-  - type: Review
-    url: review.yml
+- type: Website
+  url: https://www.columbia.edu/
+- type: DeveloperPortal
+  url: https://opendataservice.columbia.edu/
+- type: OpenData
+  url: https://library.columbia.edu/bts/clio-data.html
+- type: LibraryCatalog
+  url: https://library.columbia.edu/
+- type: CourseCatalog
+  url: https://doc.sis.columbia.edu/
+- type: IdentityFederation
+  url: https://shibboleth.columbia.edu/idp/shibboleth
+- type: ResearchComputing
+  url: https://iridl.ldeo.columbia.edu/
+- type: Authentication
+  url: https://www.cuit.columbia.edu/web-authentication-federation
+- type: GitHubOrganization
+  url: https://github.com/cul
+- type: GitHubOrganization
+  url: https://github.com/columbia-it
+- type: LinkedIn
+  url: https://www.linkedin.com/school/columbia-university/
+- type: OpenAPI
+  url: openapi/_original/columbia-library-hours-openapi.yml
+- type: JSONSchema
+  url: json-schema/columbia-library-hours-schema.json
+- type: Examples
+  url: examples/index.yml
+- type: Rules
+  url: rules/columbia-rules.yml
+- type: Vocabulary
+  url: vocabulary/columbia-vocabulary.yml
+- type: JSONLD
+  url: json-ld/columbia-context.jsonld
+- type: Authentication
+  url: authentication/columbia-authentication.yml
+- type: Scopes
+  url: scopes/columbia-scopes.yml
+- type: Errors
+  url: errors/columbia-errors.yml
+- type: Conformance
+  url: conformance/columbia-conformance.yml
+- type: Lifecycle
+  url: lifecycle/columbia-lifecycle.yml
+- type: AgenticAccess
+  url: agentic-access/columbia-agentic-access.yml
+- type: DomainSecurity
+  url: security/columbia-domain-security.yml
+- type: Plans
+  url: plans/columbia-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/columbia-rate-limits.yml
+- type: FinOps
+  url: finops/columbia-finops.yml
+- type: Review
+  url: review.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 x-coverage:
   state: covered
   reason: thin_but_fully_probed
-  detail: >-
-    Columbia University's programmable footprint is small, and this profile is thin because the
-    footprint is thin, not because the probe failed. More than forty URLs were fetched
-    successfully across fourteen Columbia hosts, and the institution's one public API was
-    exercised end to end including both error paths. What was found is genuinely Columbia's: a
-    live two-operation JSON API with CORS enabled at hours.library.columbia.edu, a production
-    Shibboleth IdP publishing SAML 2.0 metadata under the InCommon entityID
-    urn:mace:incommon:columbia.edu, a CC0 MARCXML bulk release of the entire CLIO catalogue
-    across 108 files, and Columbia's own DataCite prefix 10.7916 and Crossref membership 6984.
-    Four of the twelve education-regime domain standards were confirmed against
-    institution-operated surfaces, which is an unusually strong result for this cohort.
+  detail: 'Columbia University''s programmable footprint is small, and this profile is thin because the
+    footprint is thin, not because the probe failed. More than forty URLs were fetched successfully across
+    fourteen Columbia hosts, and the institution''s one public API was exercised end to end including
+    both error paths. What was found is genuinely Columbia''s: a live two-operation JSON API with CORS
+    enabled at hours.library.columbia.edu, a production Shibboleth IdP publishing SAML 2.0 metadata under
+    the InCommon entityID urn:mace:incommon:columbia.edu, a CC0 MARCXML bulk release of the entire CLIO
+    catalogue across 108 files, and Columbia''s own DataCite prefix 10.7916 and Crossref membership 6984.
+    Four of the twelve education-regime domain standards were confirmed against institution-operated surfaces,
+    which is an unusually strong result for this cohort.
 
 
-    Two access limits are recorded as findings about our reach, not about Columbia. The central
-    columbia.edu Drupal estate — www, the Open Data Service, CUIT, the Provost, university
-    policies, news and ai.columbia.edu — sits behind a Cloudflare managed challenge returning 403
-    to every non-browser client including one presenting full browser navigation headers, so the
-    Open Data Service documentation, the AI guidance and the acceptable-use policy could not be
-    read and are not claimed as verified content. Separately, Columbia University Libraries has
-    deployed the Anubis proof-of-work challenge in front of its Blacklight discovery estate —
-    clio.columbia.edu, academiccommons.columbia.edu and geodata.library.columbia.edu — which
-    returns HTTP 200 with a bot-check body for every path. That is why oai-pmh is recorded as
-    not_confirmed rather than credited, and why no scored pointer is emitted to any Anubis host:
-    a 200 with an identical body on every path is indistinguishable from a soft-404 to an
-    automated prober and would grade as dead.
+    Two access limits are recorded as findings about our reach, not about Columbia. The central columbia.edu
+    Drupal estate — www, the Open Data Service, CUIT, the Provost, university policies, news and ai.columbia.edu
+    — sits behind a Cloudflare managed challenge returning 403 to every non-browser client including one
+    presenting full browser navigation headers, so the Open Data Service documentation, the AI guidance
+    and the acceptable-use policy could not be read and are not claimed as verified content. Separately,
+    Columbia University Libraries has deployed the Anubis proof-of-work challenge in front of its Blacklight
+    discovery estate — clio.columbia.edu, academiccommons.columbia.edu and geodata.library.columbia.edu
+    — which returns HTTP 200 with a bot-check body for every path. That is why oai-pmh is recorded as
+    not_confirmed rather than credited, and why no scored pointer is emitted to any Anubis host: a 200
+    with an identical body on every path is indistinguishable from a soft-404 to an automated prober and
+    would grade as dead.
 
 
-    Genuine absences, verified: no OpenAPI is published by Columbia for anything; no llms.txt, no
-    ai.txt and no .well-known/api-catalog on any host; no security.txt on www.columbia.edu or
-    library.columbia.edu; no robots.txt on either (hours.library.columbia.edu serves the stock
-    empty Rails template); no OpenID Connect discovery document on the identity estate; no SCIM
-    endpoint; no MCP server, agent card or agent skills; and no changelog or deprecation policy on
-    any institution-operated surface. api.columbia.edu and data.columbia.edu do not resolve.
-    api.library.columbia.edu resolves and serves a page whose entire body is the words "API Home.
-    CUL API." with a 404 placeholder beneath every path.
+    Genuine absences, verified: no OpenAPI is published by Columbia for anything; no llms.txt, no ai.txt
+    and no .well-known/api-catalog on any host; no security.txt on www.columbia.edu or library.columbia.edu;
+    no robots.txt on either (hours.library.columbia.edu serves the stock empty Rails template); no OpenID
+    Connect discovery document on the identity estate; no SCIM endpoint; no MCP server, agent card or
+    agent skills; and no changelog or deprecation policy on any institution-operated surface. api.columbia.edu
+    and data.columbia.edu do not resolve. api.library.columbia.edu resolves and serves a page whose entire
+    body is the words "API Home. CUL API." with a 404 placeholder beneath every path.'
   evidence:
   - url: https://hours.library.columbia.edu/api/v1/locations/open_now
     status: 200
@@ -576,16 +552,13 @@ x-coverage:
   assessed: '2026-08-19'
   method: university pipeline live probe sweep
   added: 6
-  added_detail: >-
-    Six surfaces were added that the June 2026 profile missed entirely, five of them
-    institution-operated: the Libraries Hours API (the institution's only public API, verified
-    live end to end), Academic Commons, the Digital Library Collections DOI namespace, the
-    IRI/LDEO Climate Data Library, plus two tenant relationships - CourseWorks on Instructure
-    Canvas and the Columbia University Data Platform on Redivis.
+  added_detail: 'Six surfaces were added that the June 2026 profile missed entirely, five of them institution-operated:
+    the Libraries Hours API (the institution''s only public API, verified live end to end), Academic Commons,
+    the Digital Library Collections DOI namespace, the IRI/LDEO Climate Data Library, plus two tenant
+    relationships - CourseWorks on Instructure Canvas and the Columbia University Data Platform on Redivis.'
   removed: 1
-  removed_detail: >-
-    One pointer was removed. The CU Directory of Classes entry carried a GitHub property pointing
-    at soid/columbia-catalog-data, a third-party project that crawls Columbia's class directory
-    and republishes it. It is not Columbia's repository and crediting it to the institution is
-    the same artifact-presence-is-not-provenance error this pipeline exists to prevent. The
-    relationship is described in the entry's prose instead.
+  removed_detail: One pointer was removed. The CU Directory of Classes entry carried a GitHub property
+    pointing at soid/columbia-catalog-data, a third-party project that crawls Columbia's class directory
+    and republishes it. It is not Columbia's repository and crediting it to the institution is the same
+    artifact-presence-is-not-provenance error this pipeline exists to prevent. The relationship is described
+    in the entry's prose instead.
