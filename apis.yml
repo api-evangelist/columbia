@@ -158,6 +158,13 @@ apis:
   humanURL: https://opendataservice.columbia.edu/
   tags:
   - Open Data
+  - Data Feed
+  - JSON
+  - XML
+  - Gated
+  - Developer Portal
+  tags_raw:
+  - Open Data
   - Data Feeds
   - JSON
   - XML
@@ -319,6 +326,11 @@ apis:
   tags:
   - Research Data
   - Data Platform
+  - Tenants
+  - DataCite
+  tags_raw:
+  - Research Data
+  - Data Platform
   - Tenant
   - DataCite
   properties:
@@ -333,6 +345,8 @@ apis:
   humanURL: https://hours.library.columbia.edu/
   baseURL: https://hours.library.columbia.edu/api/v1
   tags:
+  - Location
+  tags_raw:
   - Locations
   properties:
   - type: OpenAPI
