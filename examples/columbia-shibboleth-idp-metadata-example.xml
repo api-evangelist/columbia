@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Columbia Shibboleth idp production instance metadata
+     This metadata is not dynamic - it will not change as your configuration changes.
+-->
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:mdattr="urn:oasis:names:tc:SAML:metadata:attribute"  xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui" entityID="urn:mace:incommon:columbia.edu">
+  <md:IDPSSODescriptor xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:req-attr="urn:oasis:names:tc:SAML:protocol:ext:req-attr" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol urn:mace:shibboleth:1.0">
+    <md:Extensions>
+      <shibmd:Scope regexp="false">columbia.edu</shibmd:Scope>
+      <mdui:UIInfo>
+        <mdui:DisplayName xml:lang="en">Columbia University</mdui:DisplayName>
+        <mdui:Description xml:lang="en">Columbia University</mdui:Description>
+        <mdui:InformationURL xml:lang="en">https://www.columbia.edu/</mdui:InformationURL>
+        <mdui:PrivacyStatementURL xml:lang="en">https://universitypolicies.columbia.edu/content/acceptable-usage-information-resources-policy</mdui:PrivacyStatementURL>
+        <mdui:Logo height="150" width="1011" xml:lang="en">https://shibboleth.columbia.edu/idp/images/cu.png</mdui:Logo>
+      </mdui:UIInfo>
+   </md:Extensions>
+    <!-- First signing certificate , the Second is encryption -->
+  <md:KeyDescriptor use="signing">
+      <ds:KeyInfo>
+        <ds:X509Data>
+          <!-- Serial No. 1213858636935703359846821668542959572209600725002, expires on Mon May 16 19:12:11 2044 GMT -->
+          <ds:X509Certificate>
+MIIESDCCArCgAwIBAgIVANSfTcYJcoJB/D+oaYfSG0ZFzoAKMA0GCSqGSIb3DQEB
+CwUAMCIxIDAeBgNVBAMMF3NoaWJib2xldGguY29sdW1iaWEuZWR1MB4XDTI0MDUx
+NjE5MTIxMVoXDTQ0MDUxNjE5MTIxMVowIjEgMB4GA1UEAwwXc2hpYmJvbGV0aC5j
+b2x1bWJpYS5lZHUwggGiMA0GCSqGSIb3DQEBAQUAA4IBjwAwggGKAoIBgQCQeFZi
+PW+MqnfAKdGxKqDh2gvd6fqweTmPP1Ihzdo07VC03uGaXB/VtX3yBit34KRJKKmW
+/lQxzlW6WLL1IOx8VxF1sf3Jef6GU9P5A1Cmc8GFT5TolBSjEehgZ8Uk/BWvh0XP
+KGCKSoTiPEZFv+YGicJxcRHWNHLBjdUrEz+9aDHgrxJ1ANHixNno+TFw0pZ5clyA
+7mnpM6tdBUSlhC+Ki8XuhixsU6fDlNsZoats4G9inz3nNCqrX535G+wBdG9Qk0SL
+IKNCVGm6TGCUd3zGJd3gJB/YKGcZFI3YayXiK2UDkBXITZnIAqj+BbM8qCIvF3Jb
+fXFQjpyiMysh3sfOxbW+0Je3yJDwiTjccDtWLvEELOdTSAEtrnx0IHIqtaiumOeA
+CCi9XXBJOePdJ7R/WqYl5pszo35tyTav9fZnha3BOqGlu1AytFy0fwt+O2i9bnqz
+62fXjpC+CZ1hs7aVFdG9v6o7CIxlVfsGvkz+pTt85FadRIpI7IPwGP1MStsCAwEA
+AaN1MHMwHQYDVR0OBBYEFJ8R36cfGhWPSoY20WKt6hafeA7AMFIGA1UdEQRLMEmC
+F3NoaWJib2xldGguY29sdW1iaWEuZWR1hi5odHRwczovL3NoaWJib2xldGguY29s
+dW1iaWEuZWR1L2lkcC9zaGliYm9sZXRoMA0GCSqGSIb3DQEBCwUAA4IBgQBtR9Ov
+XkMmYWzrKDVauNZxKTct8E8g491iUuBaZl0WkueFn8N22SCpOWV5/LVbdhQtJD7l
+IDP/mi8XrsYsrbv1TTf0F4U9hgCUZhT6+YKAr9n5OcBL/zrtzO+NgrrmU5VzVuEL
+AIOLPu06ActIYF/w9jFbft5NBN9LGrVOTZFOjlYMEMgxg9yaGZWnelc5OShKHcLw
+b1BwOa9ktK/qkfTTBTas+1a4apyEg6EBK+/DQIZ8hgqrxjRZP0i681fl/RJQlUAA
+fP1rh1Vg6Voqnp42wrMl5HZBMrMaK3K1DS3/2s00VSLQqfpf7/X8irdahXHitHfZ
+5kc69wTXcuK2H9MEQMNBIeAps9F+hozZ/r72uIx3RUs4NGV9mHxWnJgfvLTjDMgU
+kaibccXQ/3txsoMcFIU826AtmDbSduXzxyu0p0i4dtJz7BlawK7PpCq3h5ir5o7e
+cEToL3mGsC3fy0k4wyR/xGm+VI9Jh+crzaNe7mI1Wk5udhxX2B0Wxm3/fXQ=
+          </ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo>
+        <ds:X509Data>
+        <!-- Serial No. 125375442960574041594066587274706495820287364830, expires on Tue Mar  5 04:03:55 2041 GMT -->
+          <ds:X509Certificate>
+MIIERzCCAq+gAwIBAgIUFfYHgFR6V6xkAKRVRcKJuUduzt4wDQYJKoZIhvcNAQEL
+BQAwIjEgMB4GA1UEAwwXc2hpYmJvbGV0aC5jb2x1bWJpYS5lZHUwHhcNMjEwMzA1
+MDQwMzU1WhcNNDEwMzA1MDQwMzU1WjAiMSAwHgYDVQQDDBdzaGliYm9sZXRoLmNv
+bHVtYmlhLmVkdTCCAaIwDQYJKoZIhvcNAQEBBQADggGPADCCAYoCggGBAJ4/igjw
+XSBvsNi9hgZqw9D0G8o7ekkqUKxY173wprEqPrNwvffGrPW9+HSR/0M8fcAM9Wfq
+3pRiffJDkRN+f1ZpQL0iJsj5oRTie1AOAQ0m4uO9QEdPnr1P/5miifpO866m+5Ix
+DVHwNVOhpjGi6rWq8AA47vt0ipJh8IM/cTffUbujafzEWpP95HHVhiXAEw+mi9T1
+a+007mNpK/tPlGJs/Cby/Yq9QlENRdcwLV0RlEM+vgHJrWqpzYpwFg4khZL9fLqp
+0nvXjB3jR5TOwIQTi5L1cp/caNH1nqg7VoG1XT4QY4QC9anMIz8dny4Q/oGtoQEf
+X5UjlOq9EcLiHqDrkavD5UGia67UNJ1G4WAhIcE03vKhW6uV0OXAJEQeBmOJAWK0
+yOtvfi+NEZWtDWxllo0w984bvlwROQKBZXBbqrkdXv9udrwLab8pP7l4GKU6zvFl
+HduT0OPJqaO4ONyXk+tmuycpjle5WeApRHERgaynL25K3RgYCcRgpWzY0QIDAQAB
+o3UwczAdBgNVHQ4EFgQU/zIBg+ozaBbl01XfeJ2uAq81SkAwUgYDVR0RBEswSYIX
+c2hpYmJvbGV0aC5jb2x1bWJpYS5lZHWGLmh0dHBzOi8vc2hpYmJvbGV0aC5jb2x1
+bWJpYS5lZHUvaWRwL3NoaWJib2xldGgwDQYJKoZIhvcNAQELBQADggGBAC/Uc19S
+C8BpJyeKhe7wK+NS6kDyRTg1TQp2A9NiyhWXVYZcmJTFscwMyXy545eSas87qM9D
+KpJ7j2MkzSTo9K08Z3Hye8ZAqbrFZC8MsJtRAJ+WTzOtRL+r32m7PfNWJXD0yb4Y
+Yho1ybwyM3el+8NpyLKHJqGTEmd3fjAM7+7vq+uJDCS2azKnHcxUmmMl6M2YSnEx
+VrlfZKX4RfrajqvRBgMXFQG2up0GGpxYx7cOIxTzB1rDVqdpDOSPv0SYUQW2fE9J
+qhJ5a0qz9AQPtnlqJvIQIvjjci8EBnwlH5B5Dgzu0YSpTyiciaTn5cM/Lq3YeJ8G
+FSXGf6VoOLqoZSb6PptlqAeAArbDVKCZn6y/R3fGF+hAT9BzJ/enP4PpuajmL/Tw
+b361SxSRANJQaNloEryBPylv8kjS+P86oYCmw3f9QTDt92kKQMKFHE9sYlpWkXc8
+zfQtmna+LB6w3qXKhI8Qixv6aPiXXJkuDqhDfoDQiVpVGWAZ9TadSAnCrg==
+</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://cas.columbia.edu/cas/logout"/>
+      <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://cas.columbia.edu/cas/logout"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" req-attr:supportsRequestedAttributes="true" Location="https://shibboleth.columbia.edu/idp/profile/SAML2/Redirect/SSO"/>
+    <md:SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest" Location="https://shibboleth.columbia.edu/idp/profile/Shibboleth/SSO"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign" req-attr:supportsRequestedAttributes="true" Location="https://shibboleth.columbia.edu/idp/profile/SAML2/POST-SimpleSign/SSO"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" req-attr:supportsRequestedAttributes="true" Location="https://shibboleth.columbia.edu/idp/profile/SAML2/POST/SSO"/>
+  </md:IDPSSODescriptor>
+</md:EntityDescriptor>

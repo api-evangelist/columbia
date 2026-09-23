@@ -3,13 +3,7 @@ info:
   title: Columbia University Libraries Hours Locations API
   version: 1.0.0
   summary: Opening hours and open-now status for Columbia University Libraries locations.
-  description: 'The public read API behind Columbia University Libraries'' hours service. It answers two questions without authentication: which library locations are open right now, and what the posted hours are for one location over a date or a date range. It is operated by Columbia University Libraries on Columbia''s own infrastructure — hours.library.columbia.edu resolves to diglib-rails-prod1.cul.columbia.edu (128.59.222.118) and is served under a TLS certificate issued to O=Columbia University by the InCommon/Internet2 CA. The application is Columbia''s own Rails codebase, published openly at github.com/cul/ldpd-hours under the cul GitHub organisation.
-
-
-    This is the only institution-operated, publicly consumable, unauthenticated API surface found anywhere in Columbia University''s estate. It is small, and it is genuinely theirs.
-
-
-    Columbia publishes no OpenAPI, no rate-limit policy, no terms of use and no changelog for this API. This document is a description of observed behaviour, not a contract Columbia has committed to.'
+  description: The public read API behind Columbia University Libraries' hours service.
   contact:
     name: Columbia University Libraries
     url: https://library.columbia.edu/services/askalibrarian.html
@@ -134,60 +128,6 @@ paths:
                   externalValue: ../examples/columbia-library-hours-error-404-example.json
 components:
   schemas:
-    OpenWindow:
-      type: object
-      required:
-      - open_time
-      - close_time
-      - formatted_date
-      properties:
-        open_time:
-          type: string
-          pattern: ^[0-2][0-9]:[0-5][0-9]$
-          description: Local opening time, 24-hour HH:MM. America/New_York; the API states no timezone.
-          examples:
-          - 09:00
-        close_time:
-          type: string
-          pattern: ^[0-2][0-9]:[0-5][0-9]$
-          description: Local closing time, 24-hour HH:MM.
-          examples:
-          - '21:00'
-        formatted_date:
-          type: string
-          description: Human display string. Named `formatted_date` but carries a time, not a date.
-          examples:
-          - Until 09:00PM
-    ErrorResponse:
-      type: object
-      required:
-      - error
-      - data
-      properties:
-        error:
-          type: object
-          required:
-          - msg
-          properties:
-            msg:
-              type: string
-              description: Human-readable message. Carries the HTTP status as a text prefix rather than a machine-readable code; there is no error identifier an agent can branch on.
-              examples:
-              - '404: location not found'
-        data:
-          type: 'null'
-    LocationHoursResponse:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          type: object
-          description: Single-key map of the requested location code to its list of daily entries.
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/DayHours'
     DayHours:
       type: object
       required:
@@ -239,6 +179,60 @@ components:
           description: Human display string for the day's window.
           examples:
           - 09:00AM-09:00PM
+    ErrorResponse:
+      type: object
+      required:
+      - error
+      - data
+      properties:
+        error:
+          type: object
+          required:
+          - msg
+          properties:
+            msg:
+              type: string
+              description: Human-readable message. Carries the HTTP status as a text prefix rather than a machine-readable code; there is no error identifier an agent can branch on.
+              examples:
+              - '404: location not found'
+        data:
+          type: 'null'
+    OpenWindow:
+      type: object
+      required:
+      - open_time
+      - close_time
+      - formatted_date
+      properties:
+        open_time:
+          type: string
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+          description: Local opening time, 24-hour HH:MM. America/New_York; the API states no timezone.
+          examples:
+          - 09:00
+        close_time:
+          type: string
+          pattern: ^[0-2][0-9]:[0-5][0-9]$
+          description: Local closing time, 24-hour HH:MM.
+          examples:
+          - '21:00'
+        formatted_date:
+          type: string
+          description: Human display string. Named `formatted_date` but carries a time, not a date.
+          examples:
+          - Until 09:00PM
+    LocationHoursResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          type: object
+          description: Single-key map of the requested location code to its list of daily entries.
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/DayHours'
     OpenNowResponse:
       type: object
       required:
