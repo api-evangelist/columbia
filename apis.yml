@@ -21,17 +21,21 @@ description: 'Columbia University is a private Ivy League research university in
   on Redivis; both are tenant relationships, recorded as such and scored against their vendors.'
 type: Index
 deliveryModel:
-  model: unknown
+  model: saas
+  license_evidence:
+    not_product:
+    - cul/clio-spectrum
+    - cul/ldpd-hours
   open_source: unknown
   commercial: true
   callable_host: true
-  label: Delivery model not determined — needs a product licence on record
+  label: Hosted service · you call their endpoint
   confidence: low
   source:
   - openapi
   - pricing
-  - repository-unlicensed
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -180,6 +184,7 @@ apis:
   x-access: affiliation_gated
   x-status: 403 Cloudflare managed challenge, probed 2026-08-19
 - aid: columbia:directory-of-classes
+  x-published: false
   name: CU Directory of Classes
   description: The public web directory of Columbia University class offerings, browsable by subject,
     department, semester, instruction method, weekday and start time. Live and fully readable, and HTML
