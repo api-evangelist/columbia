@@ -140,6 +140,18 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/DayHours'
+    OpenNowResponse:
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          description: Map of location code to the current opening window, or null when no location is open.
+          oneOf:
+          - type: 'null'
+          - type: object
+            additionalProperties:
+              $ref: '#/components/schemas/OpenWindow'
     ErrorResponse:
       type: object
       required:
@@ -158,18 +170,6 @@ components:
               - '404: location not found'
         data:
           type: 'null'
-    OpenNowResponse:
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          description: Map of location code to the current opening window, or null when no location is open.
-          oneOf:
-          - type: 'null'
-          - type: object
-            additionalProperties:
-              $ref: '#/components/schemas/OpenWindow'
     OpenWindow:
       type: object
       required:
