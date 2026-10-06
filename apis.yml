@@ -71,7 +71,7 @@ tags:
 - Course Catalog
 - Campus Life
 created: '2026-06-03'
-modified: '2026-09-16'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 x-type: university
 x-category: Private Research University
@@ -375,6 +375,10 @@ apis:
   - type: GitHubRepository
     url: https://github.com/cul/ldpd-hours
 common:
+- url: https://neighbors.columbia.edu/news
+  type: Blog
+- url: https://neighbors.columbia.edu/news/rss.xml
+  type: BlogRSS
 - type: Website
   url: https://www.columbia.edu/
 - type: DeveloperPortal
