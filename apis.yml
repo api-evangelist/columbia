@@ -305,6 +305,12 @@ apis:
   humanURL: https://courseworks2.columbia.edu/
   baseURL: https://courseworks2.columbia.edu/api/v1
   tags:
+  - LMS
+  - LTI
+  - Canvas
+  - Course Delivery
+  - Gated
+  tags_raw:
   - Learning Management
   - LTI
   - Canvas
