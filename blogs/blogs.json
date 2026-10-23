@@ -5,7 +5,7 @@
       "source": "https://neighbors.columbia.edu/news",
       "feed_url": "https://neighbors.columbia.edu/news/rss.xml",
       "title": "",
-      "saved": 2,
+      "saved": 0,
       "method": "discovered"
     },
     {
@@ -16,11 +16,11 @@
       "method": "feed"
     },
     {
-      "source": "https://www.cuit.columbia.edu/news",
+      "source": "https://www.cuit.columbia.edu/news/rss.xml",
       "feed_url": "https://www.cuit.columbia.edu/news/rss.xml",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "feed"
     },
     {
       "source": "https://blogs.library.columbia.edu/",
@@ -30,6 +30,6 @@
       "method": "none"
     }
   ],
-  "post_count": 2,
-  "fetched": "2026-10-10T13:15:00Z"
+  "post_count": 10,
+  "fetched": "2026-10-17T14:53:57Z"
 }
